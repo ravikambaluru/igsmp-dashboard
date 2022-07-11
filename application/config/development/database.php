@@ -75,10 +75,10 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'localhost',
-	'username' => 'root',
-	'password' => '',
-	'database' => 'igsmp_dashboard',
+	'hostname' => '162.241.85.155',
+	'username' => 'igsmpi6u_user',
+	'password' => 'pm*Y#lY&-FQJ',
+	'database' => 'igsmpi6u_new_db',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,

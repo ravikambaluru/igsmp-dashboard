@@ -35,7 +35,7 @@
 
 </head>
 
-
+<?php if ($controller != "login") { ?>
 <div id="layout-wrapper">
 
     <header id="page-topbar">
@@ -86,7 +86,7 @@
                         <div class="dropdown-menu dropdown-menu-end">
                             <!-- item-->
                             <h6 class="dropdown-header">Welcome Admin!</h6>
-                            <a class="dropdown-item" href="auth-logout-basic.html"><i
+                            <a class="dropdown-item" href="<?= base_url("/logout") ?>"><i
                                     class="mdi mdi-logout text-muted fs-16 align-middle me-1"></i> <span
                                     class="align-middle" data-key="t-logout">Logout</span></a>
                         </div>
@@ -106,27 +106,24 @@
                 </div>
                 <ul class="navbar-nav" id="navbar-nav">
                     <li class="menu-title"><span data-key="t-menu">Menu</span></li>
+
                     <li class="nav-item">
-                        <a class="nav-link menu-link" href="<?= base_url('') ?>" href="#sidebarDashboards"
-                            data-bs-toggle="collapse" role="button" aria-expanded="false"
-                            aria-controls="sidebarDashboards">
+                        <a class="nav-link menu-link active" href="<?= base_url() ?>" data-bs-toggle="collapse"
+                            role="button" aria-expanded="true" aria-controls="sidebarDashboards">
                             <i class="ri-cloud-fill"></i> <span data-key="t-dashboards">Webinars</span>
                         </a>
-                        <div class="collapse menu-dropdown" id="sidebarDashboards">
+                        <div class="collapse menu-dropdown show" id="sidebarDashboards">
                             <ul class="nav nav-sm flex-column">
                                 <li class="nav-item">
-                                    <a href="dashboard-analytics.html" class="nav-link" data-key="t-analytics">
+                                    <a href="dashboard-analytics.html" class="nav-link " data-key="t-analytics">
                                         Registered Users </a>
-
                                 </li>
                                 <li class="nav-item">
-                                    <a href="dashboard-analytics.html" class="nav-link" data-key="t-analytics">
-                                        Abstract Submissions </a>
-
+                                    <a href="dashboard-crm.html" class="nav-link" data-key="t-crm"> Abstract Submissions
+                                    </a>
                                 </li>
                             </ul>
                         </div>
-
                     </li>
                     <li class="nav-item">
                         <a class="nav-link " href="<?= base_url('teams') ?>">
@@ -147,7 +144,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link " href="<?= base_url('teams') ?>">
+                        <a class="nav-link " href="<?= base_url('collabrators') ?>">
                             <i class="ri-service-fill"></i><span data-key="t-dashboards">
                                 Collabrators
                             </span>
@@ -178,3 +175,7 @@
     <!-- Left Sidebar End -->
     <!-- Vertical Overlay-->
     <div class="vertical-overlay"></div>
+    <div class="main-content">
+        <div class="page-content">
+            <div class="container-fluid">
+                <?php } ?>

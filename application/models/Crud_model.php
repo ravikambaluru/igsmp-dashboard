@@ -41,7 +41,7 @@ class Crud_model extends CI_Model
 
     $this->db->from($table);
 
-    $this->db->limit($limit, $offset);
+    if ($limit > 0 || $offset > 0) $this->db->limit($limit, $offset);
 
     $queryObj = $this->db->get();
 

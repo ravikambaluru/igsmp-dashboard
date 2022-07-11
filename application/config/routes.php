@@ -50,10 +50,33 @@ defined('BASEPATH') or exit('No direct script access allowed');
 |		my-controller/my-method	-> my_controller/my_method
 */
 $route['default_controller'] = 'home';
-$route['404_override'] = '';
+$route['404_override'] = 'errors/e404';
 $route['translate_uri_dashes'] = FALSE;
 
 
-// ============= Routes Listing ==============//
+// ============= Home routes ==============//
 
 $route['home'] = "home/index";
+
+
+
+// ===============  authentication routes =========//
+
+
+
+$route['login'] = "login/index";
+$route['logout'] = "login/logout";
+
+
+
+
+// =================  Teams routes =============//
+
+$route["teams"] = "teams/index";
+$route['teams/register'] = "teams/create";
+$route['teams/delete/(:num)'] = "teams/deleteUser/$1";
+
+
+// =========== collabrators routes ==============//
+
+$route["collabrators"] = "collabrators/index";
