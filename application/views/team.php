@@ -7,8 +7,8 @@
             </div>
             <div class="col-sm-auto ms-auto">
                 <div class="list-grid-nav hstack gap-1">
-                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addmembers"><i
-                            class="ri-add-fill me-1 align-bottom"></i>
+                    <button class="btn btn-primary" data-bs-backdrop="static" data-bs-toggle="modal"
+                        data-bs-target="#addmembers"><i class="ri-add-fill me-1 align-bottom"></i>
                         Add Members</button>
                 </div>
             </div>
@@ -32,11 +32,11 @@
 
             <div class="team-list grid-view-filter row">
 
-                <?php foreach ($team->result() as $user) { ?>
+                <?php foreach ($dataSet->result() as $user) { ?>
                 <div class="col">
                     <div class="card team-box">
                         <div class="team-cover">
-                            <img src="assets/images/small/img-5.jpg" alt="" class="img-fluid" />
+                            <img src="<?= base_url('assets/images/small/img-5.jpg') ?>" alt="" class="img-fluid" />
                         </div>
                         <div class="card-body p-4">
                             <div class="row align-items-center team-row">
@@ -58,9 +58,11 @@
                                                         data-bs-target="#addmembers"><i
                                                             class="ri-eye-line me-2 align-middle"></i>Edit</a>
                                                 </li>
-                                                <li><a class="dropdown-item"
-                                                        href="<?= 'teams/delete/' . $user->id ?>"><i
-                                                            class="ri-delete-bin-5-line me-2 align-middle"></i>Delete</a>
+                                                <li><a class="dropdown-item" id="deleteBtn" data-controller="team"
+                                                        data-id="<?= $user->id ?>" data-bs-toggle="modal"
+                                                        data-bs-target="#deleteModals" "><i
+                                                            class=" ri-delete-bin-5-line me-2
+                                                        align-middle"></i>Delete</a>
                                                 </li>
                                             </ul>
                                         </div>
@@ -70,7 +72,7 @@
                                 <div class="col-lg-4 col">
                                     <div class="team-profile-img">
                                         <div class="avatar-lg img-thumbnail rounded-circle flex-shrink-0">
-                                            <img src="assets/images/users/avatar.png" alt=""
+                                            <img src="<?= base_url($user->image) ?>" alt=""
                                                 class="img-fluid d-block rounded-circle" />
                                         </div>
                                         <div class="team-content">
@@ -113,31 +115,32 @@
             <!--end row-->
 
             <!-- Modal -->
-            <div class="modal fade" id="addmembers" tabindex="-1" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
+            <div id="addmembers" data-bs-backdrop="static" class="modal fade" tabindex="-1" aria-hidden="true"
+                style="display: none;">
+                <div class=" modal-dialog modal-dialog-centered modal-lg">
+
                     <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="myModalLabel">Add New Members</h5>
+                        <div class="modal-header bg-primary">
+                            <h5 class="modal-title text-white" id="myModalLabel">Add New Members</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <?= form_open('teams/register') ?>
+                            <?= form_open('insert') ?>
                             <div class="row">
-                                <div class="col-lg-12">
-                                    <div class="mb-3">
-                                        <label for="teammembersName" class="form-label">Name</label>
-                                        <input type="text" name="user_name" class="form-control" id="teammembersName"
-                                            placeholder="Enter name" required>
-                                    </div>
+
+                                <div class="mb-3">
+                                    <label for="teammembersName" class="form-label">Name</label>
+                                    <input type="text" name="user_name" class="form-control" id="teammembersName"
+                                        placeholder="Enter name" required>
                                 </div>
-                                <div class="col-lg-12">
-                                    <div class="mb-3">
-                                        <label for="designation" class="form-label">Designation</label>
-                                        <input type="text" name="designation" class="form-control" id="designation"
-                                            placeholder="Enter designation" required>
-                                    </div>
+
+                                <div class="mb-3">
+                                    <label for="designation" class="form-label">Designation</label>
+                                    <input type="text" name="designation" class="form-control" id="designation"
+                                        placeholder="Enter designation" required>
                                 </div>
-                                <div class="col-lg-12">
+
+                                <div class="mb-3">
                                     <label for="">User Previllage</label>
                                     <!-- Switches Color -->
                                     <select class="form-select mb-3" name="is_admin"
@@ -147,48 +150,55 @@
                                     </select>
                                 </div>
 
-                                <div class="col-lg-12">
-                                    <div class="mb-3">
-                                        <label for="email" class="form-label">Email</label>
-                                        <input type="email" name="user_email" class="form-control" id="email"
-                                            placeholder="Enter email" required>
-                                    </div>
+
+                                <div class="mb-3">
+                                    <label for="email" class="form-label">Email</label>
+                                    <input type="email" name="user_email" class="form-control" id="email"
+                                        placeholder="Enter email" required>
                                 </div>
-                                <div class="col-lg-12">
-                                    <div class="mb-3">
-                                        <label for="password" class="form-label">Password</label>
-                                        <input type="password" name="user_password" class="form-control" id="password"
-                                            placeholder="Enter password" required>
-                                    </div>
+
+                                <div class="mb-3">
+                                    <label for="password" class="form-label">Password</label>
+                                    <input type="password" name="user_password" class="form-control" id="password"
+                                        placeholder="Enter password" required>
                                 </div>
-                                <div class="col-lg-12">
-                                    <div class="mb-3">
-                                        <label for="mobile" class="form-label">Mobile</label>
-                                        <input type="text" maxlength="10" name="mobile" class="form-control" id="mobile"
-                                            placeholder="Enter mobile" required>
-                                    </div>
+
+                                <div class="mb-3">
+                                    <label for="formFile" class="form-label">Linkedin Url</label>
+                                    <input type="text" name="linkedin_link" class="form-control" id="linkedin"
+                                        placeholder="Enter Linkedin Address">
+                                    <input type="hidden" name="controller" value="team">
                                 </div>
-                                <div class="col-lg-12">
-                                    <div class="mb-3">
-                                        <label for="gmail" class="form-label">Gmail Link</label>
-                                        <input type="text" name="gmail_link" class="form-control" id="gmail"
-                                            placeholder="Enter Gmail Address">
+
+                                <div class="mb-3">
+                                    <label for="formFile" class="form-label">Thumbnail Image</label>
+                                    <input type="hidden" id="thumbnail-image" name="image">
+                                    <div class="dropzone" data-hidden-element="thumbnail-image">
+                                        <div class="fallback">
+                                            <input name="file" type="file">
+                                        </div>
+                                        <div class="dz-message needsclick">
+                                            <div class="mb-3">
+                                                <i class="display-4 text-muted ri-upload-cloud-2-fill"></i>
+                                            </div>
+
+                                            <h4>Drop files here or click to upload.</h4>
+                                        </div>
                                     </div>
+
                                 </div>
-                                <div class="col-lg-12">
-                                    <div class="mb-3">
-                                        <label for="linkedin" class="form-label">Linkedin Link</label>
-                                        <input type="text" name="linkedin_link" class="form-control" id="linkedin"
-                                            placeholder="Enter Linkedin Address">
-                                    </div>
-                                </div>
-                                <div class="col-lg-12">
-                                    <div class="hstack gap-2 justify-content-end">
-                                        <button type="button" class="btn btn-info"
-                                            data-bs-dismiss="modal">Close</button>
-                                        <button type="submit" class="btn btn-primary">Add
-                                            Member</button>
-                                    </div>
+
+
+
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <div class="col-lg-12">
+                                <div class="hstack gap-2 justify-content-end">
+                                    <button type="button" class="btn btn-info" data-bs-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary">Add
+                                        Member</button>
                                 </div>
                             </div>
                             <?= form_close() ?>

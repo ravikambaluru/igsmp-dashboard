@@ -16,28 +16,132 @@
 
   </div>
   <?php } ?>
+  <div id="deleteModals" data-bs-backdrop="static" class="modal fade bs-example-modal-center" tabindex="-1"
+      role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+              <div class="modal-body text-center p-5">
+
+                  <lord-icon class="animateDelete" src="https://cdn.lordicon.com/gsqxdxog.json" trigger="loop"
+                      style="width:250px;height:250px">
+                  </lord-icon>
+                  <div class="mt-4">
+                      <h4 class="mb-3 deleteStatement">Are you sure you want to delete??</h4>
+
+                      <div class="hstack gap-2 justify-content-center ctaDeleteSection">
+                          <button type="button" class="btn btn-light" data-bs-dismiss="modal">No</button>
+                          <btn class="btn btn-danger confirmDelete">Yes</btn>
+                      </div>
+                  </div>
+              </div>
+          </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+
+
+  <!--datatable js-->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+      integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+  <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+  <script src="<?= base_url('assets/js/pages/datatables.init.js') ?>"></script>
+
   <script src="<?= base_url('assets/libs/bootstrap/js/bootstrap.bundle.min.js') ?>"></script>
-  <script src="<?= base_url('assets/libs/simplebar/simplebar.min.js') ?>"></script>
-  <script src="<?= base_url('assets/libs/node-waves/waves.min.js') ?>"></script>
-  <script src="<?= base_url('assets/libs/feather-icons/feather.min.js') ?>"></script>
-  <script src="<?= base_url('assets/js/pages/plugins/lord-icon-2.1.0.js') ?>"></script>
   <script src="<?= base_url('assets/js/plugins.js') ?>"></script>
-
-  <!-- apexcharts -->
-  <script src="<?= base_url('assets/libs/apexcharts/apexcharts.min.js') ?>"></script>
-
-  <!-- Vector map-->
-  <script src="<?= base_url('assets/libs/jsvectormap/js/jsvectormap.min.js') ?>"></script>
-  <script src="<?= base_url('assets/libs/jsvectormap/maps/world-merc.js') ?>"></script>
-
-  <!--Swiper slider js-->
-  <script src="<?= base_url('assets/libs/swiper/swiper-bundle.min.js') ?>"></script>
-
-  <!-- Dashboard init -->
-  <script src="<?= base_url('assets/js/pages/dashboard-ecommerce.init.js') ?>"></script>
-
+  <script src="<?= base_url('assets/libs/quill/quill.min.js') ?>"></script>
   <!-- App js -->
-  <script src="<?= base_url('assets/js/app.js') ?>"></script>
+  <script src="<?= base_url('assets/js/pages/form-editor.init.js') ?>"></script>
+  <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
+  <!-- <script src="<?= base_url('assets/js/app.js') ?>"></script> -->
+  <script src="https://cdn.lordicon.com/xdjxvujz.js"></script>
+
+  <script>
+let confirmBtn = document.querySelector(".confirmDelete");
+
+confirmBtn.addEventListener("click", (ev) => {
+
+    let btn = document.getElementById("deleteBtn");
+    let deleteId = btn.getAttribute("data-id");
+    let controller = btn.getAttribute("data-controller");
+
+    let endPoint = window.location.origin + "/igsmp/delete";
+
+    let deleteAnimate = document.querySelector(".animateDelete");
+    let deleteStatement = document.querySelector(".deleteStatement");
+    let ctaDeleteSection = document.querySelector(".ctaDeleteSection");
+
+    $.ajax({
+        url: endPoint,
+        method: "post",
+        data: {
+            controller,
+            deleteId
+
+        },
+        beforeSend: function(xhr) {
+            deleteAnimate.setAttribute("src", "https://cdn.lordicon.com/kvsszuvz.json");
+            ctaDeleteSection.style.display = "none";
+            deleteStatement.innerHTML = "";
+
+        },
+        success: function(res) {
+            deleteAnimate.setAttribute("src", "https://cdn.lordicon.com/lupuorrc.json");
+            deleteStatement.innerHTML = "Sucessfully Deleted";
+
+            setTimeout(() => {
+                location.reload()
+            }, 500);
+        },
+        error: function(err) {
+            alert("something went wrong");
+            console.log(err);
+        }
+    });
+});
+  </script>
+
+  <script>
+window.addEventListener("DOMContentLoaded", () => {
+    let element = document.querySelector(".choices");
+    if (element) {
+        const choices = new Choices(element, {
+            removeItemButton: true,
+            duplicateItemsAllowed: false,
+            editItems: true
+        });
+    } else {
+        // alert("choices id not found");
+    }
+
+})
+  </script>
+
+  <script>
+$(".dropzone").each((i, el) => {
+    let dz = new Dropzone(el, {
+        url: location.origin + '/igsmp/upload',
+        method: "post",
+        uploadMultiple: false,
+        maxFileSize: 1000000,
+        acceptedFiles: "image/*",
+
+        renameFile: function(File) {
+            console.log(File);
+            let name = File.name.split(".");
+            let hiddenEl = document.getElementById(el.getAttribute("data-hidden-element"));
+            hiddenEl.setAttribute("value", "uploads/" + Date.now() + "." + name[1]);
+            return Date.now() + "." + name[1];
+        },
+
+    });
+
+    dz.on("complete", (file) => {
+        let dzEl = document.querySelector(".dropzone");
+
+    })
+});
+  </script>
   </body>
 
 

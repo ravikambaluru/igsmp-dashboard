@@ -39,7 +39,7 @@
                                     <h3><?= $controller ?></h3>
                                 </div>
                                 <div class="p-2 mt-4">
-                                    <?= form_open("/login/authenticate") ?>
+                                    <?= form_open(base_url('/authenticate')) ?>
 
                                     <div class="mb-3">
                                         <label for="username" class="form-label">User Email</label>

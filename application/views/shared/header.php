@@ -15,11 +15,6 @@
     <!-- App favicon -->
     <link rel="shortcut icon" href="assets/images/favicon.ico">
 
-    <!-- jsvectormap css -->
-    <link href="<?= base_url('assets/libs/jsvectormap/css/jsvectormap.min.css') ?>" rel="stylesheet" type="text/css" />
-
-    <!--Swiper slider css-->
-    <link href="<?= base_url('assets/libs/swiper/swiper-bundle.min.css') ?>" rel="stylesheet" type="text/css" />
 
     <!-- Layout config Js -->
     <script src="<?= base_url('assets/js/layout.js') ?>"></script>
@@ -31,6 +26,17 @@
     <link href="<?= base_url('assets/css/app.min.css') ?>" rel="stylesheet" type="text/css" />
     <!-- custom Css-->
     <link href="<?= base_url('assets/css/custom.min.css') ?>" rel="stylesheet" type="text/css" />
+    <!--datatable css-->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css" />
+    <!--datatable responsive css-->
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.bootstrap.min.css" />
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" />
+
+    <script src="https://unpkg.com/dropzone@6.0.0-beta.1/dist/dropzone-min.js"></script>
+    <link href="https://unpkg.com/dropzone@6.0.0-beta.1/dist/dropzone.css" rel="stylesheet" type="text/css" />
+
+    <link href="<?= base_url('assets/libs/quill/quill.snow.css ') ?>" rel="stylesheet" type="text/css" />
 
 
 </head>
@@ -107,58 +113,62 @@
                 <ul class="navbar-nav" id="navbar-nav">
                     <li class="menu-title"><span data-key="t-menu">Menu</span></li>
 
+
                     <li class="nav-item">
-                        <a class="nav-link menu-link active" href="<?= base_url() ?>" data-bs-toggle="collapse"
-                            role="button" aria-expanded="true" aria-controls="sidebarDashboards">
-                            <i class="ri-cloud-fill"></i> <span data-key="t-dashboards">Webinars</span>
+                        <a href="#sidebarProjects" class="nav-link" data-bs-toggle="collapse" role="button"
+                            aria-expanded="false" aria-controls="sidebarProjects" data-key="t-projects">
+                            <i class="ri-cloud-fill"></i> <span data-key="t-dashboards">Webinars
                         </a>
-                        <div class="collapse menu-dropdown show" id="sidebarDashboards">
+                        <div class="collapse menu-dropdown" id="sidebarProjects">
                             <ul class="nav nav-sm flex-column">
                                 <li class="nav-item">
-                                    <a href="dashboard-analytics.html" class="nav-link " data-key="t-analytics">
-                                        Registered Users </a>
+                                    <a href="<?= base_url('webinars/render') ?>" class="nav-link" data-key="t-list">
+                                        Webinars List</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="dashboard-crm.html" class="nav-link" data-key="t-crm"> Abstract Submissions
-                                    </a>
+                                    <a href=" <?= base_url('abstract/render') ?>" class="nav-link" data-key="t-list">
+                                        Abstract
+                                        Submissions</a>
                                 </li>
                             </ul>
                         </div>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link " href="<?= base_url('teams') ?>">
-                            <i class="ri-team-fill"></i> <span data-key="t-dashboards">Team</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
+
+                    <!-- <li class="nav-item">
                         <a class="nav-link " href="<?= base_url('teams') ?>">
                             <i class="ri-money-dollar-circle-fill"></i> <span data-key="t-dashboards">Pricing
                                 Plans</span>
                         </a>
-                    </li>
+                    </li> -->
                     <li class="nav-item">
-                        <a class="nav-link " href="<?= base_url('teams') ?>">
+                        <a class="nav-link " href="<?= base_url('speakers/render') ?>">
                             <i class="ri-shield-user-fill"></i> <span data-key="t-dashboards">
                                 Keynote Speakers
                             </span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link " href="<?= base_url('collabrators') ?>">
+                        <a class="nav-link " href="<?= base_url('team/render') ?>">
+                            <i class="ri-team-fill"></i> <span data-key="t-dashboards">Team</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link " href="<?= base_url('collabrators/render') ?>">
                             <i class="ri-service-fill"></i><span data-key="t-dashboards">
                                 Collabrators
                             </span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link " href="<?= base_url('teams') ?>">
+                        <a class="nav-link " href="<?= base_url('contact/render') ?>">
                             <i class="ri-chat-1-fill"></i><span data-key="t-dashboards">
-                                Visitor Messages
+                                Contact Messages
                             </span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link " href="<?= base_url('teams') ?>">
+                        <a class="nav-link " href="<?= base_url('newsletter/render') ?>">
                             <i class="ri-mail-volume-fill"></i><span data-key="t-dashboards">
                                 Newsletter Subscribers
                             </span>

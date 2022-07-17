@@ -14221,6 +14221,10 @@ span.flatpickr-weekday {
 	}
 }
 
+.ri {
+	cursor: pointer;
+}
+
 .auth-one-bg {
 	/* background-image: url(../images/sidebar/img-2.jpg); */
 	background-position: center;

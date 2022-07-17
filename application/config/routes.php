@@ -49,34 +49,32 @@ defined('BASEPATH') or exit('No direct script access allowed');
 | Examples:	my-controller/index	-> my_controller/index
 |		my-controller/my-method	-> my_controller/my_method
 */
-$route['default_controller'] = 'home';
+$route['default_controller'] = 'master';
 $route['404_override'] = 'errors/e404';
 $route['translate_uri_dashes'] = FALSE;
-
-
-// ============= Home routes ==============//
-
-$route['home'] = "home/index";
 
 
 
 // ===============  authentication routes =========//
 
+$route['login'] = "auth/login";
+$route['logout'] = "auth/logout";
+
+$route["authenticate"] = "auth/authenticate";
 
 
-$route['login'] = "login/index";
-$route['logout'] = "login/logout";
 
 
+//  =================== common routes pattren and routes to master controller ==========//
 
 
-// =================  Teams routes =============//
-
-$route["teams"] = "teams/index";
-$route['teams/register'] = "teams/create";
-$route['teams/delete/(:num)'] = "teams/deleteUser/$1";
+$route[":any/render"] = "master/fetch";
+$route['delete'] = "master/delete";
+$route['insert'] = "master/insert";
 
 
-// =========== collabrators routes ==============//
+// ====================== feature routes =================================//
 
-$route["collabrators"] = "collabrators/index";
+// 1. file upload
+
+$route["upload"] = "Features/upload";

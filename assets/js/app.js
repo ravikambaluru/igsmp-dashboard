@@ -208,15 +208,12 @@
 		})
 	}
 
-	function z(e) {
-		"vertical" == e ? (document.getElementById("two-column-menu").innerHTML = "", document.querySelector(".navbar-menu").innerHTML = c, document.getElementById("theme-settings-offcanvas") && (document.getElementById("sidebar-size").style.display = "block", document.getElementById("sidebar-view").style.display = "block", document.getElementById("sidebar-color").style.display = "block", document.getElementById("sidebar-img").style.display = "block", document.getElementById("layout-position").style.display = "block", document.getElementById("layout-width").style.display = "block"), h(), L(), q(), T()) : "horizontal" == e ? (B(), document.getElementById("theme-settings-offcanvas") && (document.getElementById("sidebar-size").style.display = "none", document.getElementById("sidebar-view").style.display = "none", document.getElementById("sidebar-color").style.display = "none", document.getElementById("sidebar-img").style.display = "none", document.getElementById("layout-position").style.display = "block", document.getElementById("layout-width").style.display = "block"), L()) : "twocolumn" == e && (document.getElementById("scrollbar").removeAttribute("data-simplebar"), document.getElementById("scrollbar").classList.remove("h-100"), document.getElementById("theme-settings-offcanvas") && (document.getElementById("sidebar-size").style.display = "none", document.getElementById("sidebar-view").style.display = "none", document.getElementById("sidebar-color").style.display = "block", document.getElementById("sidebar-img").style.display = "block", document.getElementById("layout-position").style.display = "none", document.getElementById("layout-width").style.display = "none"))
-	}
 
-	function q() {
-		document.getElementById("vertical-hover").addEventListener("click", function () {
-			"sm-hover" === document.documentElement.getAttribute("data-sidebar-size") ? document.documentElement.setAttribute("data-sidebar-size", "sm-hover-active") : (document.documentElement.getAttribute("data-sidebar-size"), document.documentElement.setAttribute("data-sidebar-size", "sm-hover"))
-		})
-	}
+	// function q() {
+	// 	document.getElementById("vertical-hover").addEventListener("click", function () {
+	// 		"sm-hover" === document.documentElement.getAttribute("data-sidebar-size") ? document.documentElement.setAttribute("data-sidebar-size", "sm-hover-active") : (document.documentElement.getAttribute("data-sidebar-size"), document.documentElement.setAttribute("data-sidebar-size", "sm-hover"))
+	// 	})
+	// }
 
 	function x(e) {
 		if (e == e) {
@@ -388,6 +385,8 @@
 	}
 
 	function M() {
+
+
 		var e;
 		"horizontal" !== document.documentElement.getAttribute("data-layout") && (!document.getElementById("navbar-nav") || (e = new SimpleBar(document.getElementById("navbar-nav"))) && e.getContentElement(), !document.getElementsByClassName("twocolumn-iconview")[0] || (e = new SimpleBar(document.getElementsByClassName("twocolumn-iconview")[0])) && e.getContentElement(), clearTimeout(m))
 	}
@@ -458,11 +457,8 @@
 					} : ""
 				}).showToast()
 			})
-		}), i = document.querySelectorAll("[data-choices]"), Array.from(i).forEach(function (e) {
-			var t = {},
-				a = e.attributes;
-			a["data-choices-groups"] && (t.placeholderValue = "This is a placeholder set in the config"), a["data-choices-search-false"] && (t.searchEnabled = !1), a["data-choices-search-true"] && (t.searchEnabled = !0), a["data-choices-removeItem"] && (t.removeItemButton = !0), a["data-choices-sorting-false"] && (t.shouldSort = !1), a["data-choices-sorting-true"] && (t.shouldSort = !0), a["data-choices-multiple-remove"] && (t.removeItemButton = !0), a["data-choices-limit"] && (t.maxItemCount = a["data-choices-limit"].value.toString()), a["data-choices-limit"] && (t.maxItemCount = a["data-choices-limit"].value.toString()), a["data-choices-editItem-true"] && (t.maxItemCount = !0), a["data-choices-editItem-false"] && (t.maxItemCount = !1), a["data-choices-text-unique-true"] && (t.duplicateItemsAllowed = !1), a["data-choices-text-disabled-true"] && (t.addItems = !1), a["data-choices-text-disabled-true"] ? new Choices(e, t).disable() : new Choices(e, t)
-		}), i = document.querySelectorAll("[data-provider]"), Array.from(i).forEach(function (e) {
+		}),
+		i = document.querySelectorAll("[data-provider]"), Array.from(i).forEach(function (e) {
 			var t, a, n;
 			"flatpickr" == e.getAttribute("data-provider") ? (n = {}, (t = e.attributes)["data-date-format"] && (n.dateFormat = t["data-date-format"].value.toString()), t["data-enable-time"] && (n.enableTime = !0, n.dateFormat = t["data-date-format"].value.toString() + " H:i"), t["data-altFormat"] && (n.altInput = !0, n.altFormat = t["data-altFormat"].value.toString()), t["data-minDate"] && (n.minDate = t["data-minDate"].value.toString(), n.dateFormat = t["data-date-format"].value.toString()), t["data-maxDate"] && (n.maxDate = t["data-maxDate"].value.toString(), n.dateFormat = t["data-date-format"].value.toString()), t["data-deafult-date"] && (n.defaultDate = t["data-deafult-date"].value.toString(), n.dateFormat = t["data-date-format"].value.toString()), t["data-multiple-date"] && (n.mode = "multiple", n.dateFormat = t["data-date-format"].value.toString()), t["data-range-date"] && (n.mode = "range", n.dateFormat = t["data-date-format"].value.toString()), t["data-inline-date"] && (n.inline = !0, n.defaultDate = t["data-deafult-date"].value.toString(), n.dateFormat = t["data-date-format"].value.toString()), t["data-disable-date"] && ((a = []).push(t["data-disable-date"].value), n.disable = a.toString().split(",")), flatpickr(e, n)) : "timepickr" == e.getAttribute("data-provider") && (a = {}, (n = e.attributes)["data-time-basic"] && (a.enableTime = !0, a.noCalendar = !0, a.dateFormat = "H:i"), n["data-time-hrs"] && (a.enableTime = !0, a.noCalendar = !0, a.dateFormat = "H:i", a.time_24hr = !0), n["data-min-time"] && (a.enableTime = !0, a.noCalendar = !0, a.dateFormat = "H:i", a.minTime = n["data-min-time"].value.toString()), n["data-max-time"] && (a.enableTime = !0, a.noCalendar = !0, a.dateFormat = "H:i", a.minTime = n["data-max-time"].value.toString()), n["data-default-time"] && (a.enableTime = !0, a.noCalendar = !0, a.dateFormat = "H:i", a.defaultDate = n["data-default-time"].value.toString()), n["data-time-inline"] && (a.enableTime = !0, a.noCalendar = !0, a.defaultDate = n["data-time-inline"].value.toString(), a.inline = !0), flatpickr(e, a))
 		}), Array.from(document.querySelectorAll('.dropdown-menu a[data-bs-toggle="tab"]')).forEach(function (e) {
