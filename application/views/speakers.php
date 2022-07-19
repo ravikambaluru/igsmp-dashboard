@@ -97,85 +97,6 @@
                 <!--end row-->
 
                 <!-- Modal -->
-                <div id="addMembers" data-bs-backdrop="static" class="modal fade" tabindex="-1" aria-hidden="true"
-                    style="display: none;">
-                    <div class="modal-dialog modal-dialog-centered modal-lg">
-                        <div class="modal-content border-0 overflow-hidden">
-                            <div class="modal-header p-3 bg-primary">
-                                <h4 class="card-title mb-0 text-white">Create Speaker</h4>
-                                <button type="button" class="btn-close text-white" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <?= form_open(base_url('insert')) ?>
-                                <div class="mb-3">
-                                    <label for="title" class="form-label">Name</label>
-                                    <input type="text" name="name" class="form-control" id="title" name="title"
-                                        required>
-                                    <input type="hidden" name="controller" value="speakers">
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="choices-multiple-default" class="form-label text-muted">webinars</label>
-
-                                    <select class="form-control choices" id="choices-multiple-default" data-choices
-                                        name="webinar_ids" multiple="multiple">
-                                        <?php foreach ($webinarList->result() as $webinar) { ?>
-                                        <option value="<?= $webinar->id ?>">
-                                            <?= $webinar->title ?>
-                                        </option>
-
-                                        <?php  } ?>
-                                    </select>
-                                </div>
-
-
-                                <div class="mb-3">
-                                    <label for="speaker-image" class="form-label">Image</label>
-                                    <input type="hidden" id="image" name="image">
-                                    <div class="dropzone" data-hidden-element="image">
-                                        <div class="fallback">
-                                            <input name="file" type="file">
-                                        </div>
-                                        <div class="dz-message needsclick">
-                                            <div class="mb-3">
-                                                <i class="display-4 text-muted ri-upload-cloud-2-fill"></i>
-                                            </div>
-
-                                            <h4>Drop files here or click to upload.</h4>
-                                        </div>
-                                    </div>
-
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="">Description</label>
-
-                                    <input class="editor" type="hidden" name="description" value="">
-                                    <div class="snow-editor" style="height: 300px;">
-
-                                    </div>
-                                </div>
-
-
-
-
-                            </div>
-                            <div class="modal-footer">
-                                <div class="">
-                                    <button type="button" class="btn btn-dark" data-bs-dismiss="modal"
-                                        aria-label="Close">Close</button>
-                                </div>
-                                <div class="">
-                                    <button type="submit" class="btn btn-primary">Create Speaker</button>
-                                </div>
-                            </div>
-                            <?= form_close() ?>
-                        </div>
-                        <!--end modal-content-->
-                    </div>
-                    <!--end modal-dialog-->
-                </div>
                 <!--end modal-->
 
             </div>
@@ -185,6 +106,82 @@
 </div>
 <!--end row-->
 
+<div id="addMembers" data-bs-backdrop="static" class="modal fade" tabindex="-1" aria-hidden="true"
+    style="display: none;">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header p-3 bg-primary">
+                <h4 class="card-title mb-0 text-white">Create Speaker</h4>
+                <button type="button" class="btn-close text-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <?= form_open(base_url('insert')) ?>
+                <div class="mb-3">
+                    <label for="title" class="form-label">Name</label>
+                    <input type="text" name="name" class="form-control" id="title" name="title" required>
+                    <input type="hidden" name="controller" value="speakers">
+                </div>
+
+                <div class="mb-3">
+                    <label for="choices-multiple-default" class="form-label text-muted">webinars</label>
+
+                    <select class="form-control choices" id="choices-multiple-default" data-choices name="webinar_ids"
+                        multiple="multiple">
+                        <?php foreach ($webinarList->result() as $webinar) { ?>
+                        <option value="<?= $webinar->id ?>">
+                            <?= $webinar->title ?>
+                        </option>
+
+                        <?php  } ?>
+                    </select>
+                </div>
+
+
+                <div class="mb-3">
+                    <label for="speaker-image" class="form-label">Image</label>
+                    <input type="hidden" id="image" name="image">
+                    <div class="dropzone" data-hidden-element="image">
+                        <div class="fallback">
+                            <input name="file" type="file">
+                        </div>
+                        <div class="dz-message needsclick">
+                            <div class="mb-3">
+                                <i class="display-4 text-muted ri-upload-cloud-2-fill"></i>
+                            </div>
+
+                            <h4>Drop files here or click to upload.</h4>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="mb-3">
+                    <label for="">Description</label>
+
+                    <input class="editor" type="hidden" name="description" value="">
+                    <div class="snow-editor" style="height: 300px;">
+
+                    </div>
+                </div>
+
+
+
+
+            </div>
+            <div class="modal-footer">
+                <div class="">
+                    <button type="button" class="btn btn-dark" data-bs-dismiss="modal" aria-label="Close">Close</button>
+                </div>
+                <div class="">
+                    <button type="submit" class="btn btn-primary">Create Speaker</button>
+                </div>
+            </div>
+            <?= form_close() ?>
+        </div>
+        <!--end modal-content-->
+    </div>
+    <!--end modal-dialog-->
+</div>
 
 
 <style>
