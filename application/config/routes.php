@@ -62,7 +62,7 @@ $route['logout'] = "auth/logout";
 
 $route["authenticate"] = "auth/authenticate";
 
-
+$route["/"]="login"
 
 
 //  =================== common routes pattren and routes to master controller ==========//
