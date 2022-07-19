@@ -62,6 +62,8 @@ class Auth extends CI_Controller
         redirect(base_url("webinars/render"));
       } else {
         echo "incorrect password";
+        $this->session->set_flashdata(["login_err" => "incorrect password or email !!"]);
+        redirect(base_url("login"));
       }
     } else {
 

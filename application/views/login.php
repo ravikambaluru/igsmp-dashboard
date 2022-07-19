@@ -37,6 +37,12 @@
                                     <h5 class="text-primary">Welcome Back !</h5>
 
                                     <h3><?= $controller ?></h3>
+                                    <?php if ($this->session->flashdata("login_err")) { ?>
+                                    <div class="alert alert-danger" role="alert">
+                                        <strong> Incorrect password or email !!</strong>
+                                    </div>
+
+                                    <?php } ?>
                                 </div>
                                 <div class="p-2 mt-4">
                                     <?= form_open(base_url('/authenticate')) ?>

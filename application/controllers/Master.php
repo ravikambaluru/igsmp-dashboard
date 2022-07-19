@@ -130,12 +130,55 @@ class Master extends CI_Controller
 
 
 
+    // master update start
+
+    public function update()
+    {
+
+        $data = $this->security->xss_clean($this->input->post());
+        $controller = $data["controller"];
+        unset($data["controller"]);
+        unset($data["search_terms"]);
+
+
+        $meta = $this->crudService->fetch_data("*", 'controller_meta_data', ["controller" => $controller]);
+        $meta = $meta->row();
 
 
 
 
 
 
+        if ($this->crudService->update_data($meta->tableName, $data, ["id" => $data["id"]])) {
+            $this->session->set_flashdata($controller . "_msg", "Updated sucessfully");
+            redirect(base_url("$controller/render"));
+        } else {
+            $this->session->set_flashdata($controller . "_msg", "unable to update");
+            redirect(base_url("$controller/render"));
+        }
+    }
 
 
+    // master update end
+
+
+
+    // fetch data from database
+
+    public function fetchSingle()
+    {
+        $data = $this->security->xss_clean($this->input->post());
+        $controller = $data["controller"];
+
+        $meta = $this->crudService->fetch_data("*", 'controller_meta_data', ["controller" => $controller]);
+        $meta = $meta->row();
+
+        if ($query = $this->crudService->fetch_data("*", $meta->tableName, ["id" => $data["id"]])) {
+            $result = $query->row();
+            $result->controller = $controller;
+            echo json_encode($result);
+        } else {
+            echo "failure";
+        }
+    }
 }

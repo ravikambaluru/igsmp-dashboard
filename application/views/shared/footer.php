@@ -102,10 +102,11 @@ confirmBtn.addEventListener("click", (ev) => {
   </script>
 
   <script>
+var choices;
 window.addEventListener("DOMContentLoaded", () => {
     let element = document.querySelector(".choices");
     if (element) {
-        const choices = new Choices(element, {
+        choices = new Choices(element, {
             removeItemButton: true,
             duplicateItemsAllowed: false,
             editItems: true
@@ -140,6 +141,74 @@ $(".dropzone").each((i, el) => {
         let dzEl = document.querySelector(".dropzone");
 
     })
+});
+  </script>
+
+
+  <script>
+$(document).ready(function() {
+
+
+    let editEl = document.querySelector(".global-edit");
+    let controller = editEl.getAttribute("data-controller");
+    let id = editEl.getAttribute("data-id");
+    let modalRef = editEl.getAttribute("data-bs-target");
+
+    let modal = new bootstrap.Modal(modalRef);
+    let formID = editEl.getAttribute("data-formID");
+
+
+
+    editEl.addEventListener("click", (event) => {
+        modal.toggle();
+        $.ajax({
+            url: window.origin + "/igsmp/fetchSingle",
+            method: "post",
+            data: {
+                controller,
+                id
+            },
+            success: function(res) {
+
+                let data = JSON.parse(res);
+                modal.show();
+                console.log(typeof data, data.title);
+                for (let k of Object.keys(data)) {
+                    let nodeList = document.getElementsByName(k);
+
+                    if (nodeList.length > 0) {
+
+                        if (k == "description") {
+
+                            snowEditor.setText(data[k]);
+
+                        }
+                        if (k == "id") {
+                            $(".id").show();
+                            $(".id").val(data[k]);
+                        }
+                        if (k == "keytopics") {
+                            choices.setValue([data[k]]);
+                        } else {
+                            nodeList[0].value = data[k];
+                        }
+                    }
+                }
+
+
+                document.querySelector(`#${formID}`).setAttribute("action",
+                    ` ${window.location.origin}/igsmp/update `);
+                document.querySelector(".submit-form").innerHTML = "Update";
+
+
+
+
+            },
+            error: function(err) {
+                console.error(err);
+            }
+        })
+    });
 });
   </script>
   </body>

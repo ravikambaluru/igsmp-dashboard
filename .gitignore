@@ -1,5 +1,5 @@
 .DS_Store
-/interactive
+interactive
 application/cache/*
 !application/cache/index.html
 

@@ -71,6 +71,9 @@ $route["authenticate"] = "auth/authenticate";
 $route[":any/render"] = "master/fetch";
 $route['delete'] = "master/delete";
 $route['insert'] = "master/insert";
+$route['update'] = "master/update";
+
+$route["fetchSingle"] = "master/fetchSingle";
 
 
 // ====================== feature routes =================================//

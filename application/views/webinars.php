@@ -2,7 +2,7 @@
     <div class="col-md-12">
         <?php if ($this->session->flashdata("webinars_msg")) { ?>
         <div class="alert alert-success" role="alert">
-            <strong> sucessfully created webinar</strong>
+            <strong> <?= $this->session->flashdata("webinars_msg") ?></strong>
         </div>
 
         <?php } elseif ($this->session->flashdata("webinars_err")) { ?>
@@ -52,7 +52,9 @@
                             <td>
                                 <a class=" ri" data-bs-toggle="modal" href="#deleteRecordModal"><i
                                         class="ri-eye-line align-bottom me-2 text-muted"></i> view</a>
-                                <a class=" ri" href="#showModal" data-bs-toggle="modal">
+                                <a class=" ri global-edit" data-id="<?= $webinar->id ?>" data-controller="webinars"
+                                    data-bs-target="#signupModals" data-formID="webinarForm">
+
                                     <i class="ri-pencil-fill align-bottom me-2 text-muted"></i> Edit
                                 </a>
                                 <a class="ri " id="deleteBtn" data-controller="webinars" data-id="<?= $webinar->id ?>"
@@ -82,7 +84,7 @@
                 <button type="button" class="btn-close text-white" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <?= form_open(base_url('insert')) ?>
+                <?= form_open(base_url('insert'), array("id" => "webinarForm")) ?>
                 <div class="mb-3">
                     <label for="title" class="form-label">Webinar Title</label>
                     <input type="text" name="title" class="form-control" id="title" placeholder="Enter webinar title"
@@ -101,33 +103,33 @@
                 <div class="mb-3 row">
                     <div class="col-md-6">
                         <label for="date-field" class="form-label">Start Date</label>
-                        <input type="date" id="date-field" class="form-control" name="start_date"
+                        <input type="date" id="start_date" class="form-control" name="start_date"
                             data-provider="flatpickr" data-date-format="d M, Y" placeholder="Select Date" required />
                     </div>
                     <div class="col-md-6">
                         <label for="date-field" class="form-label">End Date</label>
-                        <input type="date" id="date-field" name="end_date" class="form-control"
-                            data-provider="flatpickr" data-date-format="d M, Y" placeholder="Select Date" required />
+                        <input type="date" id="end_date" name="end_date" class="form-control" data-provider="flatpickr"
+                            data-date-format="d M, Y" placeholder="Select Date" required />
                     </div>
                 </div>
                 <div class="mb-3">
                     <label for="theme" class="form-label">Speaker Price [$]</label>
-                    <input type="text" name="speaker_price" class="form-control" id="theme" required
+                    <input type="text" name="speaker_price" class="form-control" id="speaker_price" required
                         placeholder="Enter speaker price">
                 </div>
                 <div class="mb-3">
                     <label for="theme" class="form-label">Delegate Price [$]</label>
-                    <input type="text" name="delegate_price" class="form-control" id="theme" required
+                    <input type="text" name="delegate_price" class="form-control" id="delegate_price" required
                         placeholder="Enter delegate price">
                 </div>
                 <div class="mb-3">
                     <label for="theme" class="form-label">Presentation Price [$]</label>
-                    <input type="text" name="presentation_price" class="form-control" id="theme" required
+                    <input type="text" name="presentation_price" class="form-control" id="presentation_price" required
                         placeholder="Enter presentation price">
                 </div>
                 <div class="mb-3">
                     <label for="theme" class="form-label">Sponsers Price [$]</label>
-                    <input type="text" name="sponsers_price" class="form-control" id="theme" required
+                    <input type="text" name="sponsers_price" class="form-control" id="sponsers_price" required
                         placeholder="Enter sponsers price">
                 </div>
                 <div class="mb-3">
@@ -176,6 +178,8 @@
                 <div class="mb-3">
                     <label for="description">Description</label>
                     <input class="editor" type="hidden" name="description" value="">
+
+                    <input type="hidden" name="id" class="id" style="display: none;">
                     <div class="snow-editor" style="height: 300px;">
 
                     </div>
@@ -190,7 +194,7 @@
                             aria-label="Close">Close</button>
                     </div>
                     <div class="">
-                        <button type="submit" class="btn btn-primary">Add Webinar</button>
+                        <button type="submit" class="btn btn-primary submit-form">Add Webinar</button>
                     </div>
                 </div>
 
