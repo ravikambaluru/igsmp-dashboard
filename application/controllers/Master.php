@@ -25,7 +25,10 @@ class Master extends CI_Controller
     }
 
 
-
+    public function index()
+    {
+        redirect(base_url('login'));
+    }
 
     // master -fetch start 
 
@@ -108,7 +111,7 @@ class Master extends CI_Controller
         unset($data["controller"]);
 
         if (isset($data["search_terms"])) unset($data["search_terms"]);
-        if (isset($data["user_password"])) $user["user_password"] = password_hash($user["user_password"], PASSWORD_BCRYPT);
+        if (isset($data["user_password"])) $data["user_password"] = password_hash($data["user_password"], PASSWORD_BCRYPT);
 
 
         $data["created_by"] = $this->session->uid;

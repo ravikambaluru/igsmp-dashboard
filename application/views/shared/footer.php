@@ -65,7 +65,7 @@ confirmBtn.addEventListener("click", (ev) => {
     let deleteId = btn.getAttribute("data-id");
     let controller = btn.getAttribute("data-controller");
 
-    let endPoint = window.location.origin + "/igsmp/delete";
+    let endPoint = window.location.origin + "/delete";
 
     let deleteAnimate = document.querySelector(".animateDelete");
     let deleteStatement = document.querySelector(".deleteStatement");
@@ -121,7 +121,7 @@ window.addEventListener("DOMContentLoaded", () => {
   <script>
 $(".dropzone").each((i, el) => {
     let dz = new Dropzone(el, {
-        url: location.origin + '/igsmp/upload',
+        url: location.origin + '/upload',
         method: "post",
         uploadMultiple: false,
         maxFileSize: 1000000,
@@ -162,7 +162,7 @@ $(document).ready(function() {
     editEl.addEventListener("click", (event) => {
         modal.toggle();
         $.ajax({
-            url: window.origin + "/igsmp/fetchSingle",
+            url: window.origin + "/fetchSingle",
             method: "post",
             data: {
                 controller,
@@ -197,7 +197,7 @@ $(document).ready(function() {
 
 
                 document.querySelector(`#${formID}`).setAttribute("action",
-                    ` ${window.location.origin}/igsmp/update `);
+                    ` ${window.location.origin}/update `);
                 document.querySelector(".submit-form").innerHTML = "Update";
 
 
