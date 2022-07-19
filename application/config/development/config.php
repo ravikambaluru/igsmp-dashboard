@@ -31,12 +31,12 @@ $config['base_url'] = 'http://igsmp-dashboard.herokuapp.com/igsmp;
 | Index File
 |--------------------------------------------------------------------------
 |
-| Typically this will be your index.php file, unless you've renamed it to
+| Typically this will be your index.php file, unless youve renamed it to
 | something else. If you are using mod_rewrite to remove the page set this
 | variable so that it is blank.
 |
 */
-$config['index_page'] = 'index.php';
+
 
 /*
 |--------------------------------------------------------------------------
