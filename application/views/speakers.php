@@ -91,9 +91,10 @@
                         </div>
                     </div>
                     <!--end card-->
-                    <?php } ?>
+
                     <!--end col-->
                 </div>
+                <?php } ?>
                 <!--end row-->
 
                 <!-- Modal -->
