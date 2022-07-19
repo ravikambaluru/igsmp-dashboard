@@ -24,7 +24,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 |
 */
 // $config['base_url'] = 'http://localhost/igsmp';
-$config['base_url'] = 'https://igsmp-dashboard.herokuapp.com/igsmp';
+$config['base_url'] = 'http://igsmp-dashboard.herokuapp.com/igsmp';
 
 /*
 |--------------------------------------------------------------------------
@@ -185,6 +185,8 @@ $config['permitted_uri_chars'] = 'a-z 0-9~%.:_\-';
 | use segment based URLs.
 |
 */
+
+$config['index_page'] = '';
 $config['enable_query_strings'] = FALSE;
 $config['controller_trigger'] = 'c';
 $config['function_trigger'] = 'm';
