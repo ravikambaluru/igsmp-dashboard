@@ -23,8 +23,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-// $config['base_url'] = 'http://localhost/igsmp';
-$config['base_url'] = 'http://igsmp-dashboard.herokuapp.com/';
+$config['base_url'] = 'http://localhost/igsmp-dashboard';
+// $config['base_url'] = 'http://igsmp-dashboard.herokuapp.com/';
 
 /*
 |--------------------------------------------------------------------------

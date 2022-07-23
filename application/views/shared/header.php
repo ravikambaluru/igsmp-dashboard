@@ -134,6 +134,7 @@
                         </div>
                     </li>
 
+
                     <!-- <li class="nav-item">
                         <a class="nav-link " href="<?= base_url('teams') ?>">
                             <i class="ri-money-dollar-circle-fill"></i> <span data-key="t-dashboards">Pricing
@@ -173,6 +174,21 @@
                                 Newsletter Subscribers
                             </span>
                         </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="#sidebarProjects" class="nav-link" data-bs-toggle="collapse" role="button"
+                            aria-expanded="false" aria-controls="sidebarProjects" data-key="t-projects">
+                            <i class="ri-currency-fill"></i> <span data-key="t-dashboards">Promotions
+                        </a>
+                        <div class="collapse menu-dropdown" id="sidebarProjects">
+                            <ul class="nav nav-sm flex-column">
+                                <li class="nav-item">
+                                    <a href="<?= base_url('webinars/render') ?>" class="nav-link" data-key="t-list">
+                                        Slider Promotion</a>
+                                </li>
+                            </ul>
+                        </div>
                     </li>
 
                 </ul>

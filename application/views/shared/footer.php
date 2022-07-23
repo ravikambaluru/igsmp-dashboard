@@ -162,7 +162,7 @@ $(document).ready(function() {
     editEl.addEventListener("click", (event) => {
         modal.toggle();
         $.ajax({
-            url: window.origin + "/fetchSingle",
+            url: window.origin + "/igsmp-dashboard/fetchSingle",
             method: "post",
             data: {
                 controller,
