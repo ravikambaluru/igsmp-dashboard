@@ -56,6 +56,33 @@
   <!-- <script src="<?= base_url('assets/js/app.js') ?>"></script> -->
   <script src="https://cdn.lordicon.com/xdjxvujz.js"></script>
 
+
+  <!-- close Hanlder functionality -->
+
+
+
+  <script>
+$(".toggleStatus").on("change", () => {
+
+    let controller = $(".toggleStatus").attr("data-controller");
+    let id = $(".toggleStatus").attr("data-id");
+    let value = $(".toggleStatus").val();
+    let link = location.origin + '/igsmp/status/' + controller + "/" + id + "/" + value;
+    location.href = link;
+
+});
+
+
+let closeBtn = document.querySelector(".btnClose");
+closeBtn.addEventListener("click", () => {
+    let formId = closeBtn.getAttribute("data-form-ref");
+    let formRef = document.querySelector(`#${formId}`);
+    console.log(formRef);
+    debugger;
+    formRef.reset();
+});
+  </script>
+
   <script>
 let confirmBtn = document.querySelector(".confirmDelete");
 
@@ -211,6 +238,8 @@ $(document).ready(function() {
     });
 });
   </script>
+
+
   </body>
 
 

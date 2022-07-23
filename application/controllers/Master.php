@@ -38,16 +38,24 @@ class Master extends CI_Controller
 
             $controller = $this->uri->segment(1);
 
+            $filterID = $this->uri->segment(4);
 
 
             if (in_array($controller, $this->availableControllers)) {
 
-                $meta = $this->crudService->fetch_data("*", 'controller_meta_data', ["controller" => $controller]);
+                $where = ["controller" => $controller];
+
+
+
+                $meta = $this->crudService->fetch_data("*", 'controller_meta_data', $where);
                 $meta = $meta->row();
 
                 // fetch data regarding controller
 
-                $data["dataSet"] = $this->crudService->fetch_data("*", $meta->tableName, []);
+                $filters = [];
+                if ($filterID != null && $filterID != "")
+                    $filters["webinar_ids like "] = "%" . $filterID . "%";
+                $data["dataSet"] = $this->crudService->fetch_data("*", $meta->tableName, $filters);
                 $data['controller'] = $controller;
 
                 $data['webUrl'] = "https://igsmpinternational.com/";
@@ -183,6 +191,24 @@ class Master extends CI_Controller
             echo json_encode($result);
         } else {
             echo "failure";
+        }
+    }
+    public function toggle_status()
+    {
+
+        $controller = $this->uri->segment(2);
+        $id = $this->uri->segment(3);
+        $status = $this->uri->segment(4);
+
+        $meta = $this->crudService->fetch_data("*", 'controller_meta_data', ["controller" => $controller]);
+        $meta = $meta->row();
+
+        if ($this->crudService->update_data($meta->tableName, ["active" => !$status], ["id" => $id])) {
+            $this->session->set_flashdata($controller . "_msg", "Updated sucessfully");
+            redirect(base_url("$controller/render"));
+        } else {
+            $this->session->set_flashdata($controller . "_msg", "unable to update");
+            redirect(base_url("$controller/render"));
         }
     }
 }

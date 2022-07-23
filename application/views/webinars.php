@@ -27,6 +27,7 @@
                     <thead>
                         <tr>
                             <th>Title</th>
+                            <th>Status</th>
                             <th>Scheduled Time</th>
                             <th>Query Email</th>
                             <th>Registered users</th>
@@ -40,7 +41,12 @@
                         <tr>
 
                             <td>
-                                <h5 class="text-primary"><?= $webinar->title ?></h5>
+                                <h6 class="<?= $webinar->active == 1 ? "text-primary" : "text-muted"  ?>">
+                                    <?= $webinar->title ?></h6>
+
+                            </td>
+                            <td> <span
+                                    class="badge rounded-pill  <?= $webinar->active == 1 ? ' badge-soft-secondary' : ' badge-soft-danger' ?>"><?= $webinar->active == 1 ? 'Active' : 'Inactive' ?></span>
                             </td>
                             <td><?= date("M-d", strtotime($webinar->start_date)) . " to " . date("M-d", strtotime($webinar->end_date)) ?>
                             </td>
@@ -50,16 +56,23 @@
                             <td><?= $webinar->abstract_submission_count ?></td>
                             <td><?= $webinar->id ?></td>
                             <td>
-                                <a class=" ri" data-bs-toggle="modal" href="#deleteRecordModal"><i
-                                        class="ri-eye-line align-bottom me-2 text-muted"></i> view</a>
-                                <a class=" ri global-edit" data-id="<?= $webinar->id ?>" data-controller="webinars"
-                                    data-bs-target="#signupModals" data-formID="webinarForm">
-
-                                    <i class="ri-pencil-fill align-bottom me-2 text-muted"></i> Edit
-                                </a>
-                                <a class="ri " id="deleteBtn" data-controller="webinars" data-id="<?= $webinar->id ?>"
-                                    data-bs-toggle="modal" data-bs-target="#deleteModals"><i
-                                        class="ri-delete-bin-fill align-bottom me-2 text-muted"></i> Delete</a>
+                                <!-- Base Switchs -->
+                                <div class="hstack gap-3">
+                                    <div class="form-check form-switch">
+                                        <input data-id="<?= $webinar->id ?>" data-controller="webinars"
+                                            class="toggleStatus form-check-input" type="checkbox"
+                                            value="<?= $webinar->active ?>" role="switch"
+                                            <?= $webinar->active == 1 ? "checked" : ""  ?>>
+                                    </div>
+                                    <a class=" ri global-edit" data-id="<?= $webinar->id ?>" data-controller="webinars"
+                                        data-bs-target="#signupModals" data-formID="webinarForm">
+                                        <i class="ri-pencil-fill align-bottom me-2 text-muted"></i>
+                                    </a>
+                                    <a class="ri " id="deleteBtn" data-controller="webinars"
+                                        data-id="<?= $webinar->id ?>" data-bs-toggle="modal"
+                                        data-bs-target="#deleteModals"><i
+                                            class="ri-delete-bin-fill align-bottom me-2 text-muted"></i></a>
+                                </div>
                             </td>
                         </tr>
                         <?php } ?>
@@ -81,7 +94,8 @@
         <div class="modal-content">
             <div class="modal-header p-3 bg-primary">
                 <h4 class="card-title mb-0 text-white">Create Webinar</h4>
-                <button type="button" class="btn-close text-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" data-form-ref="webinarForm" class="btnClose btn-close text-white"
+                    data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <?= form_open(base_url('insert'), array("id" => "webinarForm")) ?>
@@ -190,11 +204,11 @@
 
                 <div class="modal-footer d-flex justify-content-between">
                     <div class="">
-                        <button type="button" class="btn btn-dark" data-bs-dismiss="modal"
-                            aria-label="Close">Close</button>
+                        <button data-form-ref="webinarForm" type="button" class="btnClose btn btn-dark"
+                            data-bs-dismiss="modal" aria-label="Close">Close</button>
                     </div>
                     <div class="">
-                        <button type="submit" class="btn btn-primary submit-form">Add Webinar</button>
+                        <button type="submit" class="btn btn-primary">Add Webinar</button>
                     </div>
                 </div>
 

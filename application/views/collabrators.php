@@ -1,3 +1,15 @@
+<?php if ($this->session->flashdata("collabrators_msg")) { ?>
+<div class="alert alert-success" role="alert">
+    <strong> <?= $this->session->flashdata("collabrators_msg") ?></strong>
+</div>
+
+<?php } elseif ($this->session->flashdata("collabrators_err")) { ?>
+<!-- danger Alert -->
+<div class="alert alert-danger" role="alert">
+    <strong> some error occured </strong>
+</div>
+<?php } ?>
+
 <div class="card">
     <div class="card-body">
         <div class="row g-2">
@@ -18,17 +30,7 @@
     </div>
 </div>
 
-<?php if ($this->session->flashdata("collabrators_msg")) { ?>
-<div class="alert alert-success" role="alert">
-    <strong> sucessfully created collabrator</strong>
-</div>
 
-<?php } elseif ($this->session->flashdata("collabrators_err")) { ?>
-<!-- danger Alert -->
-<div class="alert alert-danger" role="alert">
-    <strong> error in creating collabrators </strong>Try again after sometime.
-</div>
-<?php } ?>
 
 <!--end col-->
 <div class="row">
@@ -54,7 +56,7 @@
                                         <img src="<?= base_url($collabrator->image) ?>" alt=""
                                             class="avatar-xxs rounded-circle image_src object-cover">
                                     </div>
-                                    <div class="flex-grow-1 ms-2 name"><?= $collabrator->name ?>
+                                    <div class="flex-grow-1 ms-2 name text-primary"><?= $collabrator->name ?>
                                     </div>
                                 </div>
                             </td>
@@ -64,12 +66,13 @@
                             </td>
 
                             <td>
-                                <ul class="list-inline hstack gap-2 mb-0 d-flex justify-content-between">
-                                    <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover"
-                                        data-bs-placement="top" title="View">
-                                        <a href="javascript:void(0);" class="view-item-btn"><i
-                                                class="ri-eye-fill align-bottom text-muted"></i></a>
-                                    </li>
+                                <div class="hstack gap-3">
+                                    <div class="form-check form-switch">
+                                        <input data-id="<?= $collabrator->id ?>" data-controller="collabrators"
+                                            class="toggleStatus form-check-input" type="checkbox"
+                                            value="<?= $collabrator->active ?>" role="switch"
+                                            <?= $collabrator->active == 1 ? "checked" : ""  ?>>
+                                    </div>
                                     <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover"
                                         data-bs-placement="top" title="Edit">
                                         <a class="edit-item-btn" href="#showModal" data-bs-toggle="modal"><i
@@ -83,8 +86,8 @@
                                             <i class="ri-delete-bin-fill align-bottom text-muted"></i>
                                         </a>
                                     </li>
-                                </ul>
-                            </td>
+                                    </ul>
+                                </div>
                         </tr>
                         <?php } ?>
                     </tbody>
@@ -96,11 +99,12 @@
                         <div class="modal-content">
                             <div class="modal-header p-3 bg-primary">
                                 <h4 class="card-title mb-0 text-white">Create Collabrator</h4>
-                                <button type="button" class="btn-close text-white" data-bs-dismiss="modal"
+                                <button type="button" data-form-ref="collabratorForm"
+                                    class="btnClose btn-close text-white" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <?= form_open(base_url('insert')) ?>
+                                <?= form_open(base_url('insert'), array("id" => "collabratorForm")) ?>
                                 <div class="mb-3">
                                     <label for="title" class="form-label">Name</label>
                                     <input type="text" name="name" class="form-control" id="title"
@@ -132,7 +136,8 @@
 
                                 <div class="modal-footer d-flex justify-content-between">
                                     <div class="">
-                                        <button type="button" class="btn btn-dark" data-bs-dismiss="modal"
+                                        <button data-form-ref="collabratorForm" type="button"
+                                            class="btnClose btn btn-dark" data-bs-dismiss="modal"
                                             aria-label="Close">Close</button>
                                     </div>
                                     <div class="">
