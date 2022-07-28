@@ -57,9 +57,6 @@
   <script src="https://cdn.lordicon.com/xdjxvujz.js"></script>
 
 
-  <!-- close Hanlder functionality -->
-
-
 
   <script>
 $(".toggleStatus").on("change", () => {
@@ -157,7 +154,8 @@ $(".dropzone").each((i, el) => {
         renameFile: function(File) {
             console.log(File);
             let name = File.name.split(".");
-            let hiddenEl = document.getElementById(el.getAttribute("data-hidden-element"));
+            let hiddenEl = document.getElementById(el.getAttribute(
+                "data-hidden-element"));
             hiddenEl.setAttribute("value", "uploads/" + Date.now() + "." + name[1]);
             return Date.now() + "." + name[1];
         },
@@ -183,13 +181,13 @@ $(document).ready(function() {
 
     let modal = new bootstrap.Modal(modalRef);
     let formID = editEl.getAttribute("data-formID");
-
+    let keyTopicsChoices = [];
 
 
     editEl.addEventListener("click", (event) => {
         modal.toggle();
         $.ajax({
-            url: window.origin + "/fetchSingle",
+            url: window.origin + "/igsmp/fetchSingle",
             method: "post",
             data: {
                 controller,
@@ -215,16 +213,16 @@ $(document).ready(function() {
                             $(".id").val(data[k]);
                         }
                         if (k == "keytopics") {
-                            choices.setValue([data[k]]);
+                            keyTopicsChoices = data[k].split(",");
+
                         } else {
                             nodeList[0].value = data[k];
                         }
                     }
                 }
-
-
+                choices.setValue(keyTopicsChoices);
                 document.querySelector(`#${formID}`).setAttribute("action",
-                    ` ${window.location.origin}/update `);
+                    ` ${window.location.origin}/igsmp/update `);
                 document.querySelector(".submit-form").innerHTML = "Update";
 
 
@@ -239,7 +237,49 @@ $(document).ready(function() {
 });
   </script>
 
+  <style>
+.loader {
+    height: 100vh;
+    width: 100vw;
+    background-color: #fff;
+    opacity: 1;
+    position: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 10001;
+}
+  </style>
+  <div class="loader d-none">
+      <lord-icon class="loader-animation text-white" src="https://cdn.lordicon.com/kvsszuvz.json" trigger="loop"
+          style="width:250px;height:250px">
+      </lord-icon>
+  </div>
 
+  <!-- close Hanlder functionality -->
+
+
+
+  <!-- loader functionality starts  -->
+
+  <script>
+// list of events for which loader to triggered
+let events = ["beforeunload"];
+
+events.map(event => {
+    window.addEventListener(event, () => {
+        let loader = document.querySelector(".loader");
+        loader.classList.toggle("d-none");
+    })
+})
+  </script>
+
+
+  <!-- loader functionality starts  -->
   </body>
 
 
