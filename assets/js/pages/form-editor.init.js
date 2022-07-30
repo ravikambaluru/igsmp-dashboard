@@ -23,5 +23,5 @@ bubbleEditor && Array.from(bubbleEditor).forEach(function (e) {
 
 let snowEl = document.querySelector(".snow-editor");
 snowEl.addEventListener("focusout", () => {
-	document.querySelector(".editor").value = document.querySelector(".ql-editor p").innerHTML;
+	document.querySelector(".editor").value = document.querySelector(".ql-editor").innerHTML;
 })

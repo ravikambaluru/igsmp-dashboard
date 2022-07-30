@@ -50,11 +50,16 @@
                                             </a>
                                             <ul class="dropdown-menu dropdown-menu-end"
                                                 aria-labelledby="dropdownMenuLink2">
-                                                <li><a class="dropdown-item" data-bs-toggle="modal"
-                                                        data-bs-target="#addmembers"><i
+                                                <li><a class="dropdown-item global-edit" 
+                                                       data-bs-toggle="modal"
+                                                       data-id="<?= $user->id ?>" 
+                                                       data-controller="speakers"
+                                                       data-bs-toggle="modal"
+                                                       data-bs-target="#addMembers"
+                                                       data-formID="speakerForm"><i
                                                             class="ri-eye-line me-2 align-middle"></i>Edit</a>
                                                 </li>
-                                                <li><a class="dropdown-item" id="deleteBtn" data-controller="speakers"
+                                                <li><a class="dropdown-item deleteBtn" id="deleteBtn" data-controller="speakers"
                                                         data-id="<?= $user->id ?>" data-bs-toggle="modal"
                                                         data-bs-target="#deleteModals"><i
                                                             class="ri-delete-bin-5-line me-2 align-middle"></i>Delete</a>
@@ -116,7 +121,7 @@
                 <button type="button" class="btn-close text-white" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <?= form_open(base_url('insert')) ?>
+                <?= form_open(base_url('insert'),array('id' => 'speakerForm')) ?>
                 <div class="mb-3">
                     <label for="title" class="form-label">Name</label>
                     <input type="text" name="name" class="form-control" id="title" name="title" required>
@@ -126,7 +131,7 @@
                 <div class="mb-3">
                     <label for="choices-multiple-default" class="form-label text-muted">webinars</label>
 
-                    <select class="form-control choices" id="choices-multiple-default" data-choices name="webinar_ids"
+                    <select class="form-control" id="choices-multiple-default webinars" data-choices name="webinar_ids[]"
                         multiple="multiple">
                         <?php foreach ($webinarList->result() as $webinar) { ?>
                         <option value="<?= $webinar->id ?>">
@@ -174,7 +179,7 @@
                     <button type="button" class="btn btn-dark" data-bs-dismiss="modal" aria-label="Close">Close</button>
                 </div>
                 <div class="">
-                    <button type="submit" class="btn btn-primary">Create Speaker</button>
+                    <button type="submit" class="btn btn-primary submit-form">Create Speaker</button>
                 </div>
             </div>
             <?= form_close() ?>

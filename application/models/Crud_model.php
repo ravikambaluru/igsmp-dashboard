@@ -19,7 +19,7 @@ class Crud_model extends CI_Model
 
 
   // -----------------------------   INSERT METHOD    -------------------------------------------
-  public function fetch_data(string $cols = "*", string $table, $where, int $offset = 0, int $limit = 0)
+  public function fetch_data(string $cols = "*", string $table, $where, int $offset = 0, int $limit = 0, $join = [])
   {
 
 
@@ -41,8 +41,9 @@ class Crud_model extends CI_Model
 
     $this->db->from($table);
 
-    $this->db->order_by("id DESC");
+    $this->db->order_by($table.".id DESC");
     if ($limit > 0 || $offset > 0) $this->db->limit($limit, $offset);
+    if ($join) $this->db->join($join[0],$join[1]);
 
     $queryObj = $this->db->get();
 

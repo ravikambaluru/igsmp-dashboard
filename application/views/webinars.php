@@ -50,14 +50,14 @@
                             <td><?= $webinar->abstract_submission_count ?></td>
                             <td><?= $webinar->id ?></td>
                             <td>
-                                <a class=" ri" data-bs-toggle="modal" href="#deleteRecordModal"><i
-                                        class="ri-eye-line align-bottom me-2 text-muted"></i> view</a>
-                                <a class=" ri global-edit" data-id="<?= $webinar->id ?>" data-controller="webinars"
+                                <!-- <a class=" ri" data-bs-toggle="modal" href="#deleteRecordModal"><i
+                                        class="ri-eye-line align-bottom me-2 text-muted"></i> view</a> -->
+                                <a class=" ri global-edit" data-id="<?= $webinar->id ?>" data-controller="webinars" data-bs-toggle="modal"
                                     data-bs-target="#signupModals" data-formID="webinarForm">
 
                                     <i class="ri-pencil-fill align-bottom me-2 text-muted"></i> Edit
                                 </a>
-                                <a class="ri " id="deleteBtn" data-controller="webinars" data-id="<?= $webinar->id ?>"
+                                <a class="ri deleteBtn" id="deleteBtn" data-controller="webinars" data-id="<?= $webinar->id ?>"
                                     data-bs-toggle="modal" data-bs-target="#deleteModals"><i
                                         class="ri-delete-bin-fill align-bottom me-2 text-muted"></i> Delete</a>
                             </td>
