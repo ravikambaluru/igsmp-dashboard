@@ -54,6 +54,15 @@
                                             </a>
                                             <ul class="dropdown-menu dropdown-menu-end"
                                                 aria-labelledby="dropdownMenuLink2">
+
+                                                <li>
+                                                    <input data-id="<?= $user->id ?>" data-controller="team"
+                                                        class="toggleStatus form-check-input" type="checkbox"
+                                                        value="<?= $user->active ?>" role="switch"
+                                                        <?= $user->active == 1 ? "checked" : ""  ?>>
+                                                    Active
+                                                </li>
+
                                                 <li><a class="dropdown-item" data-bs-toggle="modal"
                                                         data-bs-target="#addmembers"><i
                                                             class="ri-eye-line me-2 align-middle"></i>Edit</a>
@@ -72,8 +81,10 @@
                                 <div class="col-lg-4 col">
                                     <div class="team-profile-img">
                                         <div class="avatar-lg img-thumbnail rounded-circle flex-shrink-0">
+
                                             <img src="<?= base_url($user->image) ?>" alt=""
-                                                class="img-fluid d-block rounded-circle" />
+                                                class="img-fluid d-block rounded-circle"
+                                                onerror="this.error=null;this.src=`${window.location.origin}/igsmp/assets/images/users/avatar.png`" />
                                         </div>
                                         <div class="team-content">
 
@@ -87,7 +98,8 @@
 
                                             </h3>
 
-
+                                            <span
+                                                class="badge rounded-pill  <?= $user->active == 1 ? ' badge-soft-secondary' : ' badge-soft-danger' ?>"><?= $user->active == 1 ? 'Active' : 'Inactive' ?></span>
                                             <p class="text-muted mb-0"><?= $user->designation ?></p>
                                         </div>
                                     </div>
@@ -122,10 +134,11 @@
                     <div class="modal-content">
                         <div class="modal-header bg-primary">
                             <h5 class="modal-title text-white" id="myModalLabel">Add New Members</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <button type="button" data-form-ref="teamForm" class="btnClose btn-close"
+                                data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <?= form_open('insert') ?>
+                            <?= form_open(base_url('insert'), array("id" => "teamForm")) ?>
                             <div class="row">
 
                                 <div class="mb-3">
@@ -196,7 +209,8 @@
                         <div class="modal-footer">
                             <div class="col-lg-12">
                                 <div class="hstack gap-2 justify-content-end">
-                                    <button type="button" class="btn btn-info" data-bs-dismiss="modal">Close</button>
+                                    <button data-form-ref="teamForm" type="button" class="btnClose btn btn-info"
+                                        data-bs-dismiss="modal">Close</button>
                                     <button type="submit" class="btn btn-primary">Add
                                         Member</button>
                                 </div>

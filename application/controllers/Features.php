@@ -20,4 +20,11 @@ class Features extends CI_Controller
             echo "success";
         }
     }
+
+
+    public function cronHandler()
+    {
+        $id = $this->crudService->fetch_data("id", "igsmp_webinars", ["end_date" => "< now()"]);
+        $this->crudService->update_data("igsmp_webinars", ["active" => 0], ["id" => " in " . $id]);
+    }
 }

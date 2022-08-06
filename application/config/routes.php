@@ -69,13 +69,14 @@ $route["authenticate"] = "auth/authenticate";
 
 
 $route[":any/render"] = "master/fetch";
+
+$route[":any/render/filter/:num"] = "master/fetch/$1";
 $route['delete'] = "master/delete";
 $route['insert'] = "master/insert";
 $route['update'] = "master/update";
 
 $route["fetchSingle"] = "master/fetchSingle";
-
-
+$route['status/(:any)/(:num)/(:num)'] = "master/toggle_status/$1/$2/$3";
 // ====================== feature routes =================================//
 
 // 1. file upload

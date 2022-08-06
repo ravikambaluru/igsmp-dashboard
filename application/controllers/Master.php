@@ -38,17 +38,30 @@ class Master extends CI_Controller
 
             $controller = $this->uri->segment(1);
 
+            $filterID = $this->uri->segment(4);
 
 
             if (in_array($controller, $this->availableControllers)) {
 
-                $meta = $this->crudService->fetch_data("*", 'controller_meta_data', ["controller" => $controller]);
+                $where = ["controller" => $controller];
+
+                $data["user"] = $this->session->uid;
+                $data["user"] = $this->crudService->fetch_data("user_name", "igsmp_team", ["id" => $this->session->uid])->row();
+
+                $meta = $this->crudService->fetch_data("*", 'controller_meta_data', $where);
                 $meta = $meta->row();
 
                 $join = $meta->join_str ? explode(',',$meta->join_str) : [];
                 // fetch data regarding controller
 
+
                 $data["dataSet"] = $this->crudService->fetch_data("*", $meta->tableName, [], 0, 0, $join);
+
+                $filters = [];
+                if ($filterID != null && $filterID != "")
+                    $filters["webinar_ids like "] = "%" . $filterID . "%";
+                $data["dataSet"] = $this->crudService->fetch_data("*", $meta->tableName, $filters);
+
                 $data['controller'] = $controller;
 
                 $data['webUrl'] = "https://igsmpinternational.com/";
@@ -123,6 +136,27 @@ class Master extends CI_Controller
 
         $data["created_by"] = $this->session->uid;
 
+
+        if ($controller == "webinars") {
+            $target = [];
+            $startTime = $data["startTime"];
+            $endTime = $data["endTime"];
+            $schedDesc = $data["schedDesc"];
+
+            print_r($schedDesc);
+
+            for ($i = 0; $i < count($startTime); $i++) {
+                $temp = $startTime[$i] . " " . $endTime[$i];
+                $target[$temp] = $schedDesc[$i];
+            }
+
+            $data["schedules"] = json_encode($target);
+
+            unset($data["startTime"]);
+            unset($data["endTime"]);
+            unset($data["schedDesc"]);
+        }
+
         if ($this->crudService->insert_data($meta->tableName, $data)) {
             $this->session->set_flashdata($controller . "_msg", "User created sucessfully");
             redirect(base_url("$controller/render"));
@@ -193,6 +227,24 @@ class Master extends CI_Controller
             echo json_encode($result);
         } else {
             echo "failure";
+        }
+    }
+    public function toggle_status()
+    {
+
+        $controller = $this->uri->segment(2);
+        $id = $this->uri->segment(3);
+        $status = $this->uri->segment(4);
+
+        $meta = $this->crudService->fetch_data("*", 'controller_meta_data', ["controller" => $controller]);
+        $meta = $meta->row();
+
+        if ($this->crudService->update_data($meta->tableName, ["active" => !$status], ["id" => $id])) {
+            $this->session->set_flashdata($controller . "_msg", "Updated sucessfully");
+            redirect(base_url("$controller/render"));
+        } else {
+            $this->session->set_flashdata($controller . "_msg", "unable to update");
+            redirect(base_url("$controller/render"));
         }
     }
 }

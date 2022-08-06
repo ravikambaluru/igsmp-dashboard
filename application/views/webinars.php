@@ -27,11 +27,16 @@
                     <thead>
                         <tr>
                             <th>Title</th>
-                            <th>Scheduled Time</th>
+                            <th>Status</th>
                             <th>Query Email</th>
                             <th>Registered users</th>
                             <th>Abstract Submissions</th>
-                            <th>Keynote Speakers</th>
+
+                            <th>Scheduled Date</th>
+                            
+                            
+                            
+                            <!-- <th>Scheduled Time</th> -->
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -40,26 +45,42 @@
                         <tr>
 
                             <td>
-                                <h5 class="text-primary"><?= $webinar->title ?></h5>
+                                <h6 class="<?= $webinar->active == 1 ? "text-primary" : "text-muted"  ?>">
+                                    <?= $webinar->title ?></h6>
+
                             </td>
-                            <td><?= date("M-d", strtotime($webinar->start_date)) . " to " . date("M-d", strtotime($webinar->end_date)) ?>
+                            <td> <span
+                                    class="badge rounded-pill  <?= $webinar->active == 1 ? ' badge-soft-secondary' : ' badge-soft-danger' ?>"><?= $webinar->active == 1 ? 'Active' : 'Inactive' ?></span>
                             </td>
+
 
                             <td><?= $webinar->query_email ?></td>
                             <td><?= $webinar->registered_users ?></td>
                             <td><?= $webinar->abstract_submission_count ?></td>
-                            <td><?= $webinar->id ?></td>
-                            <td>
-                                <!-- <a class=" ri" data-bs-toggle="modal" href="#deleteRecordModal"><i
-                                        class="ri-eye-line align-bottom me-2 text-muted"></i> view</a> -->
-                                <a class=" ri global-edit" data-id="<?= $webinar->id ?>" data-controller="webinars" data-bs-toggle="modal"
-                                    data-bs-target="#signupModals" data-formID="webinarForm">
 
-                                    <i class="ri-pencil-fill align-bottom me-2 text-muted"></i> Edit
-                                </a>
-                                <a class="ri deleteBtn" id="deleteBtn" data-controller="webinars" data-id="<?= $webinar->id ?>"
-                                    data-bs-toggle="modal" data-bs-target="#deleteModals"><i
-                                        class="ri-delete-bin-fill align-bottom me-2 text-muted"></i> Delete</a>
+                            <td><?= date("M-d", strtotime($webinar->start_date)) . " to " . date("M-d", strtotime($webinar->end_date)) ?>
+                            </td>
+                            <!-- <td><?= $webinar->schedules ?></td> -->
+                            <td>
+
+                                <!-- Base Switchs -->
+                                <div class="hstack gap-3">
+                                    <div class="form-check form-switch">
+                                        <input data-id="<?= $webinar->id ?>" data-controller="webinars"
+                                            class="toggleStatus form-check-input" type="checkbox"
+                                            value="<?= $webinar->active ?>" role="switch"
+                                            <?= $webinar->active == 1 ? "checked" : ""  ?>>
+                                    </div>
+                                    <a class=" ri global-edit" data-id="<?= $webinar->id ?>" data-controller="webinars"
+                                        data-bs-target="#signupModals" data-formID="webinarForm">
+                                        <i class="ri-pencil-fill align-bottom me-2 text-muted"></i>
+                                    </a>
+                                    <a class="ri " id="deleteBtn" data-controller="webinars"
+                                        data-id="<?= $webinar->id ?>" data-bs-toggle="modal"
+                                        data-bs-target="#deleteModals"><i
+                                            class="ri-delete-bin-fill align-bottom me-2 text-muted"></i></a>
+                                </div>
+
                             </td>
                         </tr>
                         <?php } ?>
@@ -81,7 +102,8 @@
         <div class="modal-content">
             <div class="modal-header p-3 bg-primary">
                 <h4 class="card-title mb-0 text-white">Create Webinar</h4>
-                <button type="button" class="btn-close text-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                <!-- <button type="button" data-form-ref="webinarForm" class="btnClose btn-close text-white"
+                    data-bs-dismiss="modal" aria-label="Close"></button> -->
             </div>
             <div class="modal-body">
                 <?= form_open(base_url('insert'), array("id" => "webinarForm")) ?>
@@ -99,18 +121,6 @@
                     <label for="queryEmail" class="form-label">Query Email</label>
                     <input type="email" class="form-control" id="queryEmail" placeholder="Enter Query Email Address"
                         name="query_email" required>
-                </div>
-                <div class="mb-3 row">
-                    <div class="col-md-6">
-                        <label for="date-field" class="form-label">Start Date</label>
-                        <input type="date" id="start_date" class="form-control" name="start_date"
-                            data-provider="flatpickr" data-date-format="d M, Y" placeholder="Select Date" required />
-                    </div>
-                    <div class="col-md-6">
-                        <label for="date-field" class="form-label">End Date</label>
-                        <input type="date" id="end_date" name="end_date" class="form-control" data-provider="flatpickr"
-                            data-date-format="d M, Y" placeholder="Select Date" required />
-                    </div>
                 </div>
                 <div class="mb-3">
                     <label for="theme" class="form-label">Speaker Price [$]</label>
@@ -137,8 +147,59 @@
                     <input class="form-control choices" name="keytopics" id="choices-text-unique-values" data-choices
                         data-choices-text-unique-true type="text" value="" required />
                 </div>
+                <div class="mb-3 row">
+                    <div class="col-md-6">
+                        <label for="date-field" class="form-label">Start Date</label>
+                        <input type="date" id="start_date" class="form-control" name="start_date"
+                            data-provider="flatpickr" data-date-format="d M, Y" placeholder="Select Date" required />
+                    </div>
+                    <div class="col-md-6">
+                        <label for="date-field" class="form-label">End Date</label>
+                        <input type="date" id="end_date" nagme="end_date" class="form-control" data-provider="flatpickr"
+                            data-date-format="d M, Y" placeholder="Select Date" required />
+                    </div>
+                </div>
+
+
+                <div class="row mb-3" id="schedule-block">
+                    <label for="" class="form-label">Time Schedules</label>
+                    <div class="col">
+                        <div class="mb-3">
+                            <label class="form-label">Start Time</label>
+                            <div class="input-group ">
+                                <input type="datetime-local" name="startTime[]" class="form-control "
+                                    placeholder="Select start time">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="mb-3">
+                            <label class="form-label">End Time</label>
+                            <div class="input-group ">
+                                <input type="datetime-local" name="endTime[]" class="form-control "
+                                    placeholder="Select end time">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col d-flex justify-content-between align-items-center">
+                        <div class="mb-3">
+                            <label class="form-label">Description</label>
+                            <input class="form-control" type="text" name="schedDesc[]" id="">
+                        </div>
+                        <i class=" ri-add-circle-line ml-3" style="font-size: 25px;" onclick="addSlotHandler()"></i>
+
+                    </div>
+
+                </div>
+
+                <div id="dynamicControls"></div>
+
                 <div class="mb-3">
                     <label for="formFile" class="form-label">Thumbnail Image</label>
+                    <div class="row">
+
+                        <img src="" id="thumbnail-preview" alt="">
+                    </div>
                     <input type="hidden" id="thumbnail-image" name="thumbnail_image">
                     <div class="dropzone" data-hidden-element="thumbnail-image">
                         <div class="fallback">
@@ -156,6 +217,9 @@
                 </div>
                 <div class="mb-3">
                     <label for="formFile" class="form-label">Banner Image</label>
+                    <div class="row">
+                        <img src="" id="banner-preview" alt="">
+                    </div>
                     <input type="hidden" name="controller" value="webinars">
                     <input type="hidden" id="banner-image" name="banner_image">
 
@@ -190,8 +254,8 @@
 
                 <div class="modal-footer d-flex justify-content-between">
                     <div class="">
-                        <button type="button" class="btn btn-dark" data-bs-dismiss="modal"
-                            aria-label="Close">Close</button>
+                        <button data-form-ref="webinarForm" type="button" class="btnClose btn btn-dark"
+                            data-bs-dismiss="modal" aria-label="Close">Close</button>
                     </div>
                     <div class="">
                         <button type="submit" class="btn btn-primary submit-form">Add Webinar</button>

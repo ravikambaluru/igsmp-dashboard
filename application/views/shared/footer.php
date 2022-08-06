@@ -64,6 +64,24 @@
   <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
   <!-- <script src="<?= base_url('assets/js/app.js') ?>"></script> -->
   <script src="https://cdn.lordicon.com/xdjxvujz.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.2/main.min.js"></script>
+
+
+  <script>
+$(".toggleStatus").on("change", () => {
+
+    let controller = $(".toggleStatus").attr("data-controller");
+    let id = $(".toggleStatus").attr("data-id");
+    let value = $(".toggleStatus").val();
+    let link = location.origin + '/igsmp/status/' + controller + "/" + id + "/" + value;
+    location.href = link;
+
+});
+
+
+let closeBtn = document.querySelector(".btnClose");
+closeBtn.addEventListener("click", () => window.location.reload());
+  </script>
 
     <script>
         $('.deleteBtn').each( function(){
@@ -126,6 +144,9 @@
 
         })
     </script>
+ 
+
+  
 
     <script>
         $(".dropzone").each((i, el) => {
@@ -146,6 +167,7 @@
 
             });
 
+    
 
             dz.on("complete", (file) => {
                 let dzEl = document.querySelector(".dropzone");
@@ -191,7 +213,19 @@
                                     nodeList = document.getElementsByName(k);
                                 }
                                 
-                                
+                              //  schedules time control logics
+
+                              if (k == "schedules") {
+                                  data.schedules = JSON.parse(data.schedules);
+                                  for (let sched of Object.keys(data.schedules)) {
+                                      let times = sched.split(" ");
+                                      let d = data.schedules[sched];
+
+                                      let control = addSchedules(times[0], times[1], d);
+                                      $("#dynamicControls").append(control);
+                                  }
+
+                                  $("#schedule-block").remove();
                                 if (nodeList.length > 0) {
 
                                     if (k == "description" || k == "banner_text") {
@@ -213,7 +247,32 @@
                                         var keyTopicsChoices = data[k].split(",");
                                         choices.setValue(keyTopicsChoices);
 
-                                    } else {
+                                    }
+                                    
+                                    if (k == "thumbnail_image") {
+                            $("#thumbnail-preview").attr("src", window.location.origin +
+                                '/igsmp/' +
+                                data[
+                                    k]);
+                        }
+                        if (k == "banner_image") {
+                            $("#banner-preview").attr('src', window.location.origin +
+                                '/igsmp/' +
+                                data[k]);
+                        }
+                        
+                        else {
+                            nodeList[0].value = data[k];
+                        }
+                    }
+                }
+                choices.setValue(keyTopicsChoices);
+                document.querySelector(`#${formID}`).setAttribute("action",
+                    ` ${window.location.origin}/igsmp/update `);
+                document.querySelector(".submit-form").innerHTML = "Update";
+
+                                    
+                                    else {
                                         nodeList[0].value = data[k];
                                     }
                                 }
@@ -230,11 +289,122 @@
                         error: function(err) {
                             console.error(err);
                         }
-                    })
+
+                    });
                 })
                     
             })
         })
     </script>
+
+
+                        
+
+
+
+            },
+            error: function(err) {
+                console.error(err);
+            }
+        })
+    });
+});
+  </script>
+
+  <style>
+.loader {
+    height: 100vh;
+    width: 100vw;
+    background-color: #fff;
+    opacity: 1;
+    position: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 10001;
+}
+  </style>
+  <div class="loader d-none">
+      <lord-icon class="loader-animation text-white" src="https://cdn.lordicon.com/kvsszuvz.json" trigger="loop"
+          style="width:250px;height:250px">
+      </lord-icon>
+  </div>
+
+  <!-- close Hanlder functionality -->
+
+
+
+  <!-- loader functionality starts  -->
+
+  <script>
+// list of events for which loader to triggered
+let events = ["beforeunload"];
+
+events.map(event => {
+    window.addEventListener(event, () => {
+        let loader = document.querySelector(".loader");
+        loader.classList.toggle("d-none");
+    })
+})
+  </script>
+
+
+
+  <!-- calendar & schedule logics -->
+
+  <script>
+let addSlotHandler = () => {
+    let el = addSchedules("", "", "");
+    $("#dynamicControls").append(el);
+};
+
+function addSchedules(start, end, desc) {
+    let string = `                <div class="row mb-3" id="schedule-block">
+                    <label for="" class="form-label">Time Schedules</label>
+                    <div class="col">
+                        <div class="mb-3">
+                            <label class="form-label">Start Time</label>
+                            <div class="input-group ">
+                                <input type="datetime-local" name="startTime[]" class="form-control "
+                                    placeholder="Select start time" value=${start}>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="mb-3">
+                            <label class="form-label">End Time</label>
+                            <div class="input-group ">
+                                <input type="datetime-local" name="endTime[]" class="form-control "
+                                    placeholder="Select end time" value=${end}>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col d-flex justify-content-between align-items-center">
+                        <div class="mb-3">
+                            <label class="form-label">Description</label>
+                            <input class="form-control" type="text" name="schedDesc[]" id="" value=${desc}>
+                        </div>
+                    <i class=" ri-add-circle-line ml-3" style="font-size: 25px;" onclick="addSlotHandler()"></i>
+                    <i class="ri-delete-bin-3-fill" style="font-size:25px;" onclick="removeSlotHandler(event)"></i>
+
+                    </div>
+                    
+                </div>
+`;
+
+    return string;
+}
+
+// =================== remove slot functionality logics ==================//
+let removeSlotHandler = (e) => e.path[2].remove();
+  </script>
+
+
+  <!-- loader functionality starts  -->
+
   </body>
   </html>
