@@ -45,7 +45,8 @@ class Master extends CI_Controller
 
                 $where = ["controller" => $controller];
 
-
+                $data["user"] = $this->session->uid;
+                $data["user"] = $this->crudService->fetch_data("user_name", "igsmp_team", ["id" => $this->session->uid])->row();
 
                 $meta = $this->crudService->fetch_data("*", 'controller_meta_data', $where);
                 $meta = $meta->row();
@@ -123,6 +124,27 @@ class Master extends CI_Controller
 
 
         $data["created_by"] = $this->session->uid;
+
+
+        if ($controller == "webinars") {
+            $target = [];
+            $startTime = $data["startTime"];
+            $endTime = $data["endTime"];
+            $schedDesc = $data["schedDesc"];
+
+            print_r($schedDesc);
+
+            for ($i = 0; $i < count($startTime); $i++) {
+                $temp = $startTime[$i] . " " . $endTime[$i];
+                $target[$temp] = $schedDesc[$i];
+            }
+
+            $data["schedules"] = json_encode($target);
+
+            unset($data["startTime"]);
+            unset($data["endTime"]);
+            unset($data["schedDesc"]);
+        }
 
         if ($this->crudService->insert_data($meta->tableName, $data)) {
             $this->session->set_flashdata($controller . "_msg", "User created sucessfully");

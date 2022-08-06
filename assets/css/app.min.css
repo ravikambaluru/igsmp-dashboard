@@ -11915,7 +11915,12 @@ button.gridjs-sort-desc {
 
 .fc td,
 .fc th {
-	border: 1px solid var(--vz-border-color)
+	border: 1px solid var(--vz-border-color) !important;
+}
+
+.fc .fc-col-header-cell-cushion {
+	display: block;
+	padding: 8px 4px !important;
 }
 
 .fc .fc-toolbar h2 {

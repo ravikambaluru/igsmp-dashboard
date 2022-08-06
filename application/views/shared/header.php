@@ -37,7 +37,7 @@
     <link href="https://unpkg.com/dropzone@6.0.0-beta.1/dist/dropzone.css" rel="stylesheet" type="text/css" />
 
     <link href="<?= base_url('assets/libs/quill/quill.snow.css ') ?>" rel="stylesheet" type="text/css" />
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.2/main.min.css">
 
 </head>
 
@@ -70,12 +70,12 @@
                 <div class="d-flex align-items-center">
 
 
-                    <div class="ms-1 header-item d-none d-sm-flex">
+                    <!-- <div class="ms-1 header-item d-none d-sm-flex">
                         <button type="button"
-                            class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle light-dark-mode">
+                          uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu+uuuuuuuuuuuuuu1uuuu  class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle light-dark-mode">
                             <i class='bx bx-moon fs-22'></i>
                         </button>
-                    </div>
+                    </div> -->uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuq2344
 
 
                     <div class="dropdown ms-sm-3 header-item topbar-user">
@@ -85,7 +85,8 @@
                                 <img class="rounded-circle header-profile-user"
                                     src="<?= base_url('assets/images/users/user-dummy-img.jpg') ?>" alt="Header Avatar">
                                 <span class="text-start ms-xl-2">
-                                    <span class="d-none d-xl-inline-block ms-1 fw-medium user-name-text">Admin</span>
+                                    <span
+                                        class="d-none d-xl-inline-block ms-1 fw-medium user-name-text"><?= $user->user_name ?></span>
 
                                 </span>
                         </button>
@@ -160,6 +161,14 @@
                             </span>
                         </a>
                     </li>
+                    <!-- <li class="nav-item">
+                        <a href="<?= base_url('schedules/render') ?>" class="nav-link">
+                            <i class="ri-calendar-check-fill"></i>
+                            <span data-key="t-dashboards">
+                                Schedules
+                            </span>
+                        </a>
+                    1</li> -->
                     <li class="nav-item">
                         <a class="nav-link " href="<?= base_url('contact/render') ?>">
                             <i class="ri-chat-1-fill"></i><span data-key="t-dashboards">

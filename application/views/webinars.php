@@ -28,11 +28,12 @@
                         <tr>
                             <th>Title</th>
                             <th>Status</th>
-                            <th>Scheduled Time</th>
                             <th>Query Email</th>
                             <th>Registered users</th>
                             <th>Abstract Submissions</th>
-                            <th>Keynote Speakers</th>
+
+                            <th>Scheduled Date</th>
+                            <!-- <th>Scheduled Time</th> -->
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -48,13 +49,15 @@
                             <td> <span
                                     class="badge rounded-pill  <?= $webinar->active == 1 ? ' badge-soft-secondary' : ' badge-soft-danger' ?>"><?= $webinar->active == 1 ? 'Active' : 'Inactive' ?></span>
                             </td>
-                            <td><?= date("M-d", strtotime($webinar->start_date)) . " to " . date("M-d", strtotime($webinar->end_date)) ?>
-                            </td>
+
 
                             <td><?= $webinar->query_email ?></td>
                             <td><?= $webinar->registered_users ?></td>
                             <td><?= $webinar->abstract_submission_count ?></td>
-                            <td><?= $webinar->id ?></td>
+
+                            <td><?= date("M-d", strtotime($webinar->start_date)) . " to " . date("M-d", strtotime($webinar->end_date)) ?>
+                            </td>
+                            <!-- <td><?= $webinar->schedules ?></td> -->
                             <td>
                                 <!-- Base Switchs -->
                                 <div class="hstack gap-3">
@@ -94,8 +97,8 @@
         <div class="modal-content">
             <div class="modal-header p-3 bg-primary">
                 <h4 class="card-title mb-0 text-white">Create Webinar</h4>
-                <button type="button" data-form-ref="webinarForm" class="btnClose btn-close text-white"
-                    data-bs-dismiss="modal" aria-label="Close"></button>
+                <!-- <button type="button" data-form-ref="webinarForm" class="btnClose btn-close text-white"
+                    data-bs-dismiss="modal" aria-label="Close"></button> -->
             </div>
             <div class="modal-body">
                 <?= form_open(base_url('insert'), array("id" => "webinarForm")) ?>
@@ -113,18 +116,6 @@
                     <label for="queryEmail" class="form-label">Query Email</label>
                     <input type="email" class="form-control" id="queryEmail" placeholder="Enter Query Email Address"
                         name="query_email" required>
-                </div>
-                <div class="mb-3 row">
-                    <div class="col-md-6">
-                        <label for="date-field" class="form-label">Start Date</label>
-                        <input type="date" id="start_date" class="form-control" name="start_date"
-                            data-provider="flatpickr" data-date-format="d M, Y" placeholder="Select Date" required />
-                    </div>
-                    <div class="col-md-6">
-                        <label for="date-field" class="form-label">End Date</label>
-                        <input type="date" id="end_date" name="end_date" class="form-control" data-provider="flatpickr"
-                            data-date-format="d M, Y" placeholder="Select Date" required />
-                    </div>
                 </div>
                 <div class="mb-3">
                     <label for="theme" class="form-label">Speaker Price [$]</label>
@@ -151,8 +142,59 @@
                     <input class="form-control choices" name="keytopics" id="choices-text-unique-values" data-choices
                         data-choices-text-unique-true type="text" value="" required />
                 </div>
+                <div class="mb-3 row">
+                    <div class="col-md-6">
+                        <label for="date-field" class="form-label">Start Date</label>
+                        <input type="date" id="start_date" class="form-control" name="start_date"
+                            data-provider="flatpickr" data-date-format="d M, Y" placeholder="Select Date" required />
+                    </div>
+                    <div class="col-md-6">
+                        <label for="date-field" class="form-label">End Date</label>
+                        <input type="date" id="end_date" nagme="end_date" class="form-control" data-provider="flatpickr"
+                            data-date-format="d M, Y" placeholder="Select Date" required />
+                    </div>
+                </div>
+
+
+                <div class="row mb-3" id="schedule-block">
+                    <label for="" class="form-label">Time Schedules</label>
+                    <div class="col">
+                        <div class="mb-3">
+                            <label class="form-label">Start Time</label>
+                            <div class="input-group ">
+                                <input type="datetime-local" name="startTime[]" class="form-control "
+                                    placeholder="Select start time">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="mb-3">
+                            <label class="form-label">End Time</label>
+                            <div class="input-group ">
+                                <input type="datetime-local" name="endTime[]" class="form-control "
+                                    placeholder="Select end time">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col d-flex justify-content-between align-items-center">
+                        <div class="mb-3">
+                            <label class="form-label">Description</label>
+                            <input class="form-control" type="text" name="schedDesc[]" id="">
+                        </div>
+                        <i class=" ri-add-circle-line ml-3" style="font-size: 25px;" onclick="addSlotHandler()"></i>
+
+                    </div>
+
+                </div>
+
+                <div id="dynamicControls"></div>
+
                 <div class="mb-3">
                     <label for="formFile" class="form-label">Thumbnail Image</label>
+                    <div class="row">
+
+                        <img src="" id="thumbnail-preview" alt="">
+                    </div>
                     <input type="hidden" id="thumbnail-image" name="thumbnail_image">
                     <div class="dropzone" data-hidden-element="thumbnail-image">
                         <div class="fallback">
@@ -170,6 +212,9 @@
                 </div>
                 <div class="mb-3">
                     <label for="formFile" class="form-label">Banner Image</label>
+                    <div class="row">
+                        <img src="" id="banner-preview" alt="">
+                    </div>
                     <input type="hidden" name="controller" value="webinars">
                     <input type="hidden" id="banner-image" name="banner_image">
 
@@ -208,7 +253,7 @@
                             data-bs-dismiss="modal" aria-label="Close">Close</button>
                     </div>
                     <div class="">
-                        <button type="submit" class="btn btn-primary">Add Webinar</button>
+                        <button type="submit" class="btn btn-primary submit-form">Add Webinar</button>
                     </div>
                 </div>
 
