@@ -135,6 +135,7 @@
                         </div>
                     </li>
 
+
                     <!-- <li class="nav-item">
                         <a class="nav-link " href="<?= base_url('teams') ?>">
                             <i class="ri-money-dollar-circle-fill"></i> <span data-key="t-dashboards">Pricing
@@ -182,6 +183,36 @@
                                 Newsletter Subscribers
                             </span>
                         </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " href="<?= base_url('registration/render') ?>">
+                            <i class="ri-currency-fill"></i><span data-key="t-dashboards">
+                                Registered Users
+                            </span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="#sidebarProjects" class="nav-link" data-bs-toggle="collapse" role="button"
+                            aria-expanded="false" aria-controls="sidebarProjects" data-key="t-projects">
+                            <i class="ri-advertisement-line"></i> <span data-key="t-dashboards">Promotions
+                        </a>
+                        <div class="collapse menu-dropdown" id="sidebarProjects">
+                            <ul class="nav nav-sm flex-column">
+                                <li class="nav-item">
+                                    <a href="<?= base_url('banner_ad/render') ?>" class="nav-link" data-key="t-list">
+                                    Banned Ad</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href=" <?= base_url('dongle_ad/render') ?>" class="nav-link" data-key="t-list">
+                                    Dongle Ad</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href=" <?= base_url('bottombar_ad/render') ?>" class="nav-link" data-key="t-list">
+                                    Bottombar Ad</a>
+                                </li>
+                            </ul>
+                        </div>
                     </li>
 
                 </ul>

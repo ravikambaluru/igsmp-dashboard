@@ -19,7 +19,7 @@
             </div>
             <div class="col-sm-auto ms-auto">
                 <div class="list-grid-nav hstack gap-1">
-                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#showModal"><i
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#signupModals"><i
                             class="ri-add-fill me-1 align-bottom"></i>
                         Add Collabrators</button>
                 </div>
@@ -75,7 +75,7 @@
                                     </div>
                                     <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover"
                                         data-bs-placement="top" title="Edit">
-                                        <a class="edit-item-btn" href="#showModal" data-bs-toggle="modal"><i
+                                        <a class="edit-item-btn global-edit" data-id="<?= $collabrator->id ?>" data-controller="collabrators" data-bs-target="#signupModals" data-bs-toggle="modal" data-formID="collabrators"><i
                                                 class="ri-pencil-fill align-bottom text-muted"></i></a>
                                     </li>
                                     <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover"
@@ -93,7 +93,7 @@
                     </tbody>
                 </table>
 
-                <div id="showModal" data-bs-backdrop="static" class="modal fade" tabindex="-1" aria-hidden="true"
+                <div id="signupModals" data-bs-backdrop="static" class="modal fade" tabindex="-1" aria-hidden="true"
                     style="display: none;">
                     <div class="modal-dialog modal-dialog-centered modal-lg">
                         <div class="modal-content">
@@ -104,7 +104,12 @@
                                     aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <?= form_open(base_url('insert'), array("id" => "collabratorForm")) ?>
+
+                                <?= form_open(base_url('insert'), array("id" => "collabrators")) ?>
+                                
+
+                                <!--- <?= form_open(base_url('insert'), array("id" => "collabratorForm")) ?>  -->
+
                                 <div class="mb-3">
                                     <label for="title" class="form-label">Name</label>
                                     <input type="text" name="name" class="form-control" id="title"
@@ -115,6 +120,7 @@
                                     <input type="hidden" name="controller" value="collabrators">
                                     <input type="hidden" id="image" name="image">
                                     <input type="hidden" name="active" value="1">
+                                    <input type="hidden" name="id" class="id" style="display: none;">
 
                                     <div class="dropzone" data-hidden-element="image">
                                         <div class="fallback">
@@ -141,7 +147,7 @@
                                             aria-label="Close">Close</button>
                                     </div>
                                     <div class="">
-                                        <button type="submit" class="btn btn-primary">Add Collabrator</button>
+                                        <button type="submit" class="btn btn-primary submit-form">Add Collabrator</button>
                                     </div>
                                 </div>
 

@@ -51,12 +51,17 @@ class Master extends CI_Controller
                 $meta = $this->crudService->fetch_data("*", 'controller_meta_data', $where);
                 $meta = $meta->row();
 
+                $join = $meta->join_str ? explode(',',$meta->join_str) : [];
                 // fetch data regarding controller
+
+
+                $data["dataSet"] = $this->crudService->fetch_data("*", $meta->tableName, [], 0, 0, $join);
 
                 $filters = [];
                 if ($filterID != null && $filterID != "")
                     $filters["webinar_ids like "] = "%" . $filterID . "%";
                 $data["dataSet"] = $this->crudService->fetch_data("*", $meta->tableName, $filters);
+
                 $data['controller'] = $controller;
 
                 $data['webUrl'] = "https://igsmpinternational.com/";
@@ -111,6 +116,12 @@ class Master extends CI_Controller
     {
 
         $data = $this->security->xss_clean($this->input->post());
+         
+        if($data['webinar_ids']){
+         
+            $data['webinar_ids'] = implode(",",$data['webinar_ids']);
+            
+        }
 
         $controller = $data["controller"];
 
@@ -170,6 +181,9 @@ class Master extends CI_Controller
     {
 
         $data = $this->security->xss_clean($this->input->post());
+
+        print_r($data);
+
         $controller = $data["controller"];
         unset($data["controller"]);
         unset($data["search_terms"]);

@@ -33,6 +33,9 @@
                             <th>Abstract Submissions</th>
 
                             <th>Scheduled Date</th>
+                            
+                            
+                            
                             <!-- <th>Scheduled Time</th> -->
                             <th>Actions</th>
                         </tr>
@@ -59,6 +62,7 @@
                             </td>
                             <!-- <td><?= $webinar->schedules ?></td> -->
                             <td>
+
                                 <!-- Base Switchs -->
                                 <div class="hstack gap-3">
                                     <div class="form-check form-switch">
@@ -76,6 +80,7 @@
                                         data-bs-target="#deleteModals"><i
                                             class="ri-delete-bin-fill align-bottom me-2 text-muted"></i></a>
                                 </div>
+
                             </td>
                         </tr>
                         <?php } ?>

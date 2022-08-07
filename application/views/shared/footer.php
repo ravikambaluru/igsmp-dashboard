@@ -39,6 +39,15 @@
   </div><!-- /.modal -->
 
 
+    <div id="loader" style="position:fixed;top:0;left:0;right:0;bottom:0;background-color: rgba(0,0,0,0.5);z-index:9999;display:none;">
+        <lord-icon 
+            class="animateDelete" 
+            src="https://cdn.lordicon.com/kvsszuvz.json" trigger="loop"
+            style="width:250px;height:250px;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);">
+        </lord-icon>
+    </div>
+
+
   <!--datatable js-->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"
       integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
@@ -74,151 +83,173 @@ let closeBtn = document.querySelector(".btnClose");
 closeBtn.addEventListener("click", () => window.location.reload());
   </script>
 
-  <script>
-let confirmBtn = document.querySelector(".confirmDelete");
+    <script>
+        $('.deleteBtn').each( function(){
 
-confirmBtn.addEventListener("click", (ev) => {
+            $(this).on('click', function(e) {
+                var deleteId = $(this).attr('data-id');
+                var controller = $(this).attr('data-controller');
 
-    let btn = document.getElementById("deleteBtn");
-    let deleteId = btn.getAttribute("data-id");
-    let controller = btn.getAttribute("data-controller");
+                var deleteAnimate = document.querySelector(".animateDelete");
+                var deleteStatement = document.querySelector(".deleteStatement");
+                var ctaDeleteSection = document.querySelector(".ctaDeleteSection");
 
-    let endPoint = window.location.origin + "/igsmp/delete";
 
-    let deleteAnimate = document.querySelector(".animateDelete");
-    let deleteStatement = document.querySelector(".deleteStatement");
-    let ctaDeleteSection = document.querySelector(".ctaDeleteSection");
+                var endPoint = window.origin + "/igsmp-dashboard/delete";
+                $('.confirmDelete').on('click',() => {
+                    $.ajax({
+                        url: endPoint,
+                        method: "post",
+                        data: {
+                            controller,
+                            deleteId
 
-    $.ajax({
-        url: endPoint,
-        method: "post",
-        data: {
-            controller,
-            deleteId
+                        },
+                        beforeSend: function(xhr) {
+                            deleteAnimate.setAttribute("src", "https://cdn.lordicon.com/kvsszuvz.json");
+                            ctaDeleteSection.style.display = "none";
+                            deleteStatement.innerHTML = "";
+                        },
+                        success: function(res) {
+                            deleteAnimate.setAttribute("src", "https://cdn.lordicon.com/lupuorrc.json");
+                            deleteStatement.innerHTML = "Sucessfully Deleted";
 
-        },
-        beforeSend: function(xhr) {
-            deleteAnimate.setAttribute("src", "https://cdn.lordicon.com/kvsszuvz.json");
-            ctaDeleteSection.style.display = "none";
-            deleteStatement.innerHTML = "";
+                            setTimeout(() => {
+                                location.reload()
+                            }, 500);
+                        },
+                        error: function(err) {
+                            alert("something went wrong");
+                            console.log(err);
+                        }
+                    });
+                })
+            })
+        })
+    </script>
 
-        },
-        success: function(res) {
-            deleteAnimate.setAttribute("src", "https://cdn.lordicon.com/lupuorrc.json");
-            deleteStatement.innerHTML = "Sucessfully Deleted";
+    <script>
+        var choices;
+        window.addEventListener("DOMContentLoaded", () => {
+            let element = document.querySelector(".choices");
+            if (element) {
+                choices = new Choices(element, {
+                    removeItemButton: true,
+                    duplicateItemsAllowed: false,
+                    editItems: true
+                });
+            } else {
+                // alert("choices id not found");
+            }
 
-            setTimeout(() => {
-                location.reload()
-            }, 500);
-        },
-        error: function(err) {
-            alert("something went wrong");
-            console.log(err);
-        }
-    });
-});
-  </script>
+        })
+    </script>
+ 
 
-  <script>
-var choices;
-window.addEventListener("DOMContentLoaded", () => {
-    let element = document.querySelector(".choices");
-    if (element) {
-        choices = new Choices(element, {
-            removeItemButton: true,
-            duplicateItemsAllowed: false,
-            editItems: true
+  
+
+    <script>
+        $(".dropzone").each((i, el) => {
+            let dz = new Dropzone(el, {
+                url: window.origin + '/igsmp-dashboard/upload',
+                method: "post",
+                uploadMultiple: false,
+                maxFileSize: 1000000,
+                acceptedFiles: "image/*",
+
+                renameFile: function(File) {
+                    console.log(File);
+                    let name = File.name.split(".");
+                    let hiddenEl = document.getElementById(el.getAttribute("data-hidden-element"));
+                    hiddenEl.setAttribute("value", "uploads/" + Date.now() + "." + name[1]);
+                    return Date.now() + "." + name[1];
+                },
+
+            });
+
+    
+
+            dz.on("complete", (file) => {
+                let dzEl = document.querySelector(".dropzone");
+
+            })
+
         });
-    } else {
-        // alert("choices id not found");
-    }
-
-})
-  </script>
-
-  <script>
-$(".dropzone").each((i, el) => {
-    let dz = new Dropzone(el, {
-        url: location.origin + '/igsmp/upload',
-        method: "post",
-        uploadMultiple: false,
-        maxFileSize: 1000000,
-        acceptedFiles: "image/*",
-
-        renameFile: function(File) {
-            console.log(File);
-            let name = File.name.split(".");
-            let hiddenEl = document.getElementById(el.getAttribute(
-                "data-hidden-element"));
-            hiddenEl.setAttribute("value", "uploads/" + Date.now() + "." + name[1]);
-            return Date.now() + "." + name[1];
-        },
-
-    });
-
-    dz.on("complete", (file) => {
-        let dzEl = document.querySelector(".dropzone");
-
-    })
-});
-  </script>
+    </script>
 
 
-  <script>
-$(document).ready(function() {
+    <script>
+        $(document).ready(function() {
 
+            $('.global-edit').each( function(){
+                $(this).on('click', function(e) {
+                    var id = $(this).attr('data-id');
+                    var controller = $(this).attr('data-controller');
+                    var modalRef = $(this).attr('data-bs-target');
 
-    let editEl = document.querySelector(".global-edit");
-    let controller = editEl.getAttribute("data-controller");
-    let id = editEl.getAttribute("data-id");
-    let modalRef = editEl.getAttribute("data-bs-target");
+                    var formID = $(this).attr("data-formID");
 
-    let modal = new bootstrap.Modal(modalRef);
-    let formID = editEl.getAttribute("data-formID");
-    let keyTopicsChoices = [];
+                    $.ajax({
+                        url: window.origin + "/igsmp-dashboard/fetchSingle",
+                        method: "post",
+                        data: {
+                            controller,
+                            id
+                        },
+                        beforeSend: function(xhr) {
+                            document.getElementById('loader').style.display = 'block'
+                        },
+                        success: function(res) {
+                            document.getElementById('loader').style.display = 'none'
+                            let data = JSON.parse(res);
 
+                            
+                            for (let k of Object.keys(data)) {
+                                let nodeList;
+                                if(k == 'webinar_ids')
+                                {
+                                    nodeList = document.getElementsByName(k+'[]');
+                                }else{
+                                    nodeList = document.getElementsByName(k);
+                                }
+                                
+                              //  schedules time control logics
 
-    editEl.addEventListener("click", (event) => {
-        modal.toggle();
-        $.ajax({
-            url: window.origin + "/igsmp/fetchSingle",
-            method: "post",
-            data: {
-                controller,
-                id
-            },
-            success: function(res) {
+                              if (k == "schedules") {
+                                  data.schedules = JSON.parse(data.schedules);
+                                  for (let sched of Object.keys(data.schedules)) {
+                                      let times = sched.split(" ");
+                                      let d = data.schedules[sched];
 
-                let data = JSON.parse(res);
-                modal.show();
+                                      let control = addSchedules(times[0], times[1], d);
+                                      $("#dynamicControls").append(control);
+                                  }
 
-                for (let k of Object.keys(data)) {
-                    let nodeList = document.getElementsByName(k);
+                                  $("#schedule-block").remove();
+                                if (nodeList.length > 0) {
 
-                    //  schedules time control logics
+                                    if (k == "description" || k == "banner_text") {
 
-                    if (k == "schedules") {
-                        data.schedules = JSON.parse(data.schedules);
-                        for (let sched of Object.keys(data.schedules)) {
-                            let times = sched.split(" ");
-                            let d = data.schedules[sched];
+                                        snowEditor.clipboard.dangerouslyPasteHTML(0,data[k]);
 
-                            let control = addSchedules(times[0], times[1], d);
-                            $("#dynamicControls").append(control);
-                        }
+                                    }
+                                    if (k == "id") {
+                                        $(".id").show();
+                                        $(".id").val(data[k]);
+                                    }
+                                    if(k == 'webinar_ids')
+                                    {
+                                        data[k].split(",").map((val,i) => {
+                                            $(`#webinars`).val(val);
+                                        })
+                                    }
+                                    if (k == "keytopics") {
+                                        var keyTopicsChoices = data[k].split(",");
+                                        choices.setValue(keyTopicsChoices);
 
-                        $("#schedule-block").remove();
-                    }
-
-                    if (nodeList.length > 0) {
-
-                        if (k == "description") {
-
-                            snowEditor.setText(data[k]);
-
-                        }
-
-                        if (k == "thumbnail_image") {
+                                    }
+                                    
+                                    if (k == "thumbnail_image") {
                             $("#thumbnail-preview").attr("src", window.location.origin +
                                 '/igsmp/' +
                                 data[
@@ -229,14 +260,8 @@ $(document).ready(function() {
                                 '/igsmp/' +
                                 data[k]);
                         }
-                        if (k == "id") {
-                            $(".id").show();
-                            $(".id").val(data[k]);
-                        }
-                        if (k == "keytopics") {
-                            keyTopicsChoices = data[k].split(",");
-
-                        } else {
+                        
+                        else {
                             nodeList[0].value = data[k];
                         }
                     }
@@ -246,6 +271,34 @@ $(document).ready(function() {
                     ` ${window.location.origin}/igsmp/update `);
                 document.querySelector(".submit-form").innerHTML = "Update";
 
+                                    
+                                    else {
+                                        nodeList[0].value = data[k];
+                                    }
+                                }
+                            }
+
+                            
+                            document.getElementById(formID).action = `${window.origin}/igsmp-dashboard/update`;
+                            document.querySelector(".submit-form").innerHTML = "Update";
+
+
+
+
+                        },
+                        error: function(err) {
+                            console.error(err);
+                        }
+
+                    });
+                })
+                    
+            })
+        })
+    </script>
+
+
+                        
 
 
 
@@ -352,8 +405,6 @@ let removeSlotHandler = (e) => e.path[2].remove();
 
 
   <!-- loader functionality starts  -->
+
   </body>
-
-
-
   </html>
